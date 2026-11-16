@@ -1,16 +1,19 @@
-import * as T from './vendor/three.min.js?v=13';
+import * as T from './vendor/three.min.js?v=14';
+import {StorybookArt} from './storybook-art.js?v=14';
 const palette={wood:0xd5a16d,edge:0x926344,cream:0xfff4dc,sage:0xaac6a2,blue:0x40b4ce,purple:0x9566c5};
 export class PicnicScene{
  constructor(host,{action,onError,reduced=false}){
   this.host=host;this.action=action;this.onError=onError;this.reduced=reduced;this.abort=new AbortController();this.interact=[];this.foods={};this.selected=null;this.goal=null;this.drag=null;this.tweens=[];this.time=0;this.last=0;this.progress=0;this.celebration=0;
   this.scene=new T.Scene();this.scene.background=new T.Color(0xe9e5ca);this.scene.fog=new T.Fog(0xe9e5ca,20,40);
   this.camera=new T.PerspectiveCamera(39,1,.1,65);
-  this.renderer=new T.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.autoUpdate=false;this.renderer.shadowMap.needsUpdate=true;this.renderer.shadowMap.type=T.PCFSoftShadowMap;this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.08;
+  this.renderer=new T.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.autoUpdate=false;this.renderer.shadowMap.needsUpdate=true;this.renderer.shadowMap.type=T.PCFSoftShadowMap;this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;this.renderer.toneMappingExposure=.96;
   host.append(this.renderer.domElement);this.renderer.domElement.setAttribute('aria-label','Объёмная лесная кухня. Все действия также доступны кнопками под сценой.');
   this.ray=new T.Raycaster();this.point=new T.Vector2();this.plane=new T.Plane(new T.Vector3(0,1,0),-1.8);this.hit=new T.Vector3();
-  const ambient=new T.HemisphereLight(0xfff7e3,0x758b6f,1.85);this.scene.add(ambient);const sun=new T.DirectionalLight(0xffdfae,3.4);sun.position.set(-4,9,5);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);Object.assign(sun.shadow.camera,{left:-9,right:9,top:9,bottom:-9,near:.5,far:25});sun.shadow.normalBias=.035;sun.shadow.bias=-.0003;this.scene.add(sun);
-  const fill=new T.DirectionalLight(0xc7e7ff,1.4);fill.position.set(6,5,-3);this.scene.add(fill);
-  this.build();this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(host);this.resize();
+  const ambient=new T.HemisphereLight(0xfff7e3,0x658a45,1.25);this.scene.add(ambient);const sun=new T.DirectionalLight(0xffe0ab,3.7);sun.position.set(-4,9,5);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-9,right:9,top:9,bottom:-9,near:.5,far:25});sun.shadow.normalBias=.035;sun.shadow.bias=-.0003;this.scene.add(sun);
+  const fill=new T.DirectionalLight(0xc7e7ff,1.2);fill.position.set(6,5,-3);this.scene.add(fill);
+  this.art=new StorybookArt(this);this.art.environment();this.build();if(this.constructor===PicnicScene)this.art.decorateCafe();
+  for(const root of this.interact){root.traverse(o=>{if(o.isMesh&&!o.userData.pick)o.userData.pick=root.userData.pickRoot;});}
+  this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(host);this.resize();
   this.inView=true;this.visibilityObserver=new IntersectionObserver(entries=>{this.inView=entries[0].isIntersecting;if(!this.inView)this.renderer.setAnimationLoop(null);else if(!document.hidden){this.last=0;this.renderer.setAnimationLoop(t=>this.frame(t));}});this.visibilityObserver.observe(host);
   const options={signal:this.abort.signal};const canvas=this.renderer.domElement;
   canvas.addEventListener('pointerdown',e=>this.down(e),options);canvas.addEventListener('pointermove',e=>this.move(e),options);canvas.addEventListener('pointerup',e=>this.up(e),options);canvas.addEventListener('pointercancel',()=>this.cancel(),options);canvas.addEventListener('lostpointercapture',()=>this.cancel(),options);canvas.addEventListener('contextmenu',e=>e.preventDefault(),options);
@@ -18,7 +21,7 @@ export class PicnicScene{
   document.addEventListener('visibilitychange',()=>{if(document.hidden||!this.inView)this.renderer.setAnimationLoop(null);else{this.last=0;this.renderer.setAnimationLoop(t=>this.frame(t));}},options);
   this.renderer.setAnimationLoop(t=>this.frame(t));
  }
- mat(color,roughness=.62){return new T.MeshStandardMaterial({color,roughness});}
+ mat(color,roughness=.62){return this.art?this.art.material(color,roughness):new T.MeshStandardMaterial({color,roughness});}
  mesh(g,m,parent=this.scene,x=0,y=0,z=0){const o=new T.Mesh(g,typeof m==='number'?this.mat(m):m);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;parent.add(o);return o;}
  orb(parent,color,x,y,z,sx,sy=sx,sz=sx){const o=this.mesh(new T.SphereGeometry(1,28,20),color,parent,x,y,z);o.scale.set(sx,sy,sz);return o;}
  box(parent,color,x,y,z,w,h,d,r=.08){const shape=new T.Shape();const a=-w/2,b=-h/2;r=Math.min(r,w/2,h/2);shape.moveTo(a+r,b);shape.lineTo(a+w-r,b);shape.quadraticCurveTo(a+w,b,a+w,b+r);shape.lineTo(a+w,b+h-r);shape.quadraticCurveTo(a+w,b+h,a+w-r,b+h);shape.lineTo(a+r,b+h);shape.quadraticCurveTo(a,b+h,a,b+h-r);shape.lineTo(a,b+r);shape.quadraticCurveTo(a,b,a+r,b);const g=new T.ExtrudeGeometry(shape,{depth:d,bevelEnabled:true,bevelSegments:2,steps:1,bevelSize:.025,bevelThickness:.025});g.translate(0,0,-d/2);return this.mesh(g,color,parent,x,y,z);}
@@ -29,14 +32,13 @@ export class PicnicScene{
   const c=document.createElement('canvas');c.width=768;c.height=192;const x=c.getContext('2d');x.fillStyle=bg;x.fillRect(0,0,c.width,c.height);x.fillStyle=color;x.font='bold 65px Trebuchet MS, sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(text,384,100,725);
   const tex=new T.CanvasTexture(c);tex.colorSpace=T.SRGBColorSpace;const o=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:tex}));this.scene.add(o);return o;
  }
- clickable(o,id){o.traverse(c=>{if(c.isMesh)c.userData.pick=id});this.interact.push(o);return o;}
+ clickable(o,id){o.userData.pickRoot=id;o.traverse(c=>{if(c.isMesh)c.userData.pick=id});this.interact.push(o);return o;}
  build(){
   this.box(this.scene,0xa5c490,0,2.2,-4.7,18,9,.2);this.box(this.scene,0xe1c69d,0,-.42,1,22,.2,22);
   for(let x=-9;x<=9;x+=1.5){this.box(this.scene,0xddbc90,x,-.27,1,1.46,.1,15,.01);}
   // Window, timber mullions, and a small, genuinely three-dimensional garden.
   this.box(this.scene,0xf7e9c7,-3.8,3.9,-4.25,4.6,4.2,.25);this.box(this.scene,0x9ed8e8,-3.8,3.9,-4.03,4.1,3.7,.05);
-  this.orb(this.scene,0xffe3a1,-4.9,5.1,-3.9,.48);
-  for(let i=0;i<6;i++){const x=-5.3+i*.6;this.cyl(this.scene,0x9c8055,x,2.8,-3.7,.06,.1,1.5);this.orb(this.scene,i%2?0x8fb578:0xa9c985,x,3.5+Math.sin(i)*.3,-3.65,.7,.95,.25);}
+  this.art.backdrop(this.scene,-3.8,3.9,-3.96,4.08,3.68);
   this.box(this.scene,0xfff0d1,-3.8,3.9,-3.3,.1,3.6,.2);this.box(this.scene,0xfff0d1,-3.8,3.9,-3.3,4.1,.1,.2);this.box(this.scene,palette.wood,-3.8,1.9,-3.7,4.8,.18,1);
   this.box(this.scene,0xb88a58,3.8,3.0,-4,3.5,.14,1.1);this.box(this.scene,0xb88a58,3.8,4.8,-4,3.5,.14,1.1);
   for(let i=0;i<3;i++){this.jar(2.7+i*.85,3.35,-3.7,[0xe3aa79,0x9ab9af,0xf7e6b5][i]);}
@@ -45,7 +47,6 @@ export class PicnicScene{
   for(const x of [-1.1,1.1])this.curve(this.scene,0x9a8257,[[x,5.7,-4],[x,6.4,-4]],.025);
   // Tactile timber counter, rounded edge, apron and chamfered legs.
   this.box(this.scene,palette.edge,0,.62,.9,10.6,1.1,5.1,.25);this.box(this.scene,palette.wood,0,1.24,.9,10.8,.25,5.25,.25);
-  for(let z=-1.4;z<3.5;z+=.62)this.box(this.scene,0xa8794e,0,1.385,z,10.4,.012,.018,.005);
   this.box(this.scene,0xd1b493,0,.65,3.51,10.4,.65,.08);
   for(let x=-4.5;x<5;x+=1.5)this.box(this.scene,0xf1d8ad,x,.65,3.58,1.4,.55,.05);
   // Sink and running water.
@@ -75,7 +76,7 @@ export class PicnicScene{
  rabbit(){
   const g=new T.Group();this.rabbitRoot=g;g.position.set(0,0,-1.65);this.scene.add(g);
   this.orb(g,0xdbbba2,0,1.95,0,.72,.95,.56);this.orb(g,0xcbb79a,-.4,1.12,.25,.35,.18,.45);this.orb(g,0xcbb79a,.4,1.12,.25,.35,.18,.45);
-  this.orb(g,0x6cafa7,0,2.05,.2,.64,.63,.48);this.box(g,0xf5e5ba,0,1.96,.67,.55,.4,.07,.12);
+  this.orb(g,0x28a365,0,2.05,.2,.64,.63,.48);this.box(g,0xf5e5ba,0,1.96,.67,.55,.4,.07,.12);
   this.head=new T.Group();this.head.position.y=3.13;g.add(this.head);const h=this.head;
   this.orb(h,0xdcbfa7,0,0,0,.78,.72,.61);this.orb(h,0xf4e5cc,0,-.22,.47,.57,.4,.29);
   this.ears=[];for(const sign of [-1,1]){const ear=new T.Group();ear.position.set(sign*.4,.61,-.02);ear.rotation.z=-sign*.14;h.add(ear);this.orb(ear,0xdcbfa7,0,.5,0,.23,.77,.23);this.orb(ear,0xe6b2a3,0,.52,.19,.125,.59,.055);this.ears.push(ear);
@@ -126,5 +127,5 @@ export class PicnicScene{
   this.render(false);
  }
  render(shadows=true){if(shadows||this.tweens.length)this.renderer.shadowMap.needsUpdate=true;this.renderer.render(this.scene,this.camera);}
- dispose(){this.abort.abort();this.resizeObserver.disconnect();this.visibilityObserver.disconnect();this.renderer.setAnimationLoop(null);const geoms=new Set(),mats=new Set(),tex=new Set();this.scene.traverse(o=>{if(o.geometry)geoms.add(o.geometry);for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m){mats.add(m);if(m.map)tex.add(m.map)}});geoms.forEach(g=>g.dispose());tex.forEach(t=>t.dispose());mats.forEach(m=>m.dispose());this.renderer.dispose();this.renderer.forceContextLoss();this.renderer.domElement.remove();}
+ dispose(){this.art.disposed=true;this.abort.abort();this.resizeObserver.disconnect();this.visibilityObserver.disconnect();this.renderer.setAnimationLoop(null);const geoms=new Set(),mats=new Set(),tex=new Set();this.scene.traverse(o=>{if(o.geometry)geoms.add(o.geometry);for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m){mats.add(m);for(const value of Object.values(m))if(value?.isTexture)tex.add(value)}});for(const t of this.art.textures)tex.add(t);this.art.dispose();geoms.forEach(g=>g.dispose());tex.forEach(t=>t.dispose());mats.forEach(m=>m.dispose());this.renderer.dispose();this.renderer.forceContextLoss();this.renderer.domElement.remove();}
 }
