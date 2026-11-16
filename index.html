@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Играем и говорим — Мишка Матвей</title>
 <meta name="theme-color" content="#79c85d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Мишка Матвей"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><link rel="icon" type="image/png" href="./icon-192.png">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/montessori.css">
-<link rel="stylesheet" href="css/storybook.css">
-<link rel="stylesheet" href="css/discovery.css">
-<link rel="stylesheet" href="css/parent-review.css">
-<link rel="stylesheet" href="css/forest.css">
-<link rel="stylesheet" href="css/picnic.css">
+<link rel="stylesheet" href="css/base.css?v=13">
+<link rel="stylesheet" href="css/montessori.css?v=13">
+<link rel="stylesheet" href="css/storybook.css?v=13">
+<link rel="stylesheet" href="css/discovery.css?v=13">
+<link rel="stylesheet" href="css/parent-review.css?v=13">
+<link rel="stylesheet" href="css/forest.css?v=13">
+<link rel="stylesheet" href="css/picnic.css?v=13">
 </head>
 <body>
 
@@ -28,9 +28,19 @@
       <img class="home-bear" id="matveyBearHome" alt="Мишка Матвей — главный герой игры" draggable="false">
       <span class="home-spark s1">⭐</span><span class="home-spark s2">✨</span><span class="v8-hero-motto">СЛУШАЙ · ПОВТОРЯЙ · ИГРАЙ</span><span class="v8-butterfly" aria-hidden="true">🦋</span>
     </div>
-    <p id="picnicLoadError" role="status" hidden>Не удалось загрузить игру. Проверьте загрузку обновления и попробуйте снова.</p>
+    <section class="world-catalog" aria-label="Игры в 3D">
+ <div class="world-catalog-heading"><h2>Игры в 3D</h2><span>Бери · двигай · говори</span></div>
+ <div class="world-catalog-grid">
+  <button class="world-tile" id="picnicBtn"><span>🥣</span><div><strong>Лесное кафе · 3D</strong><small>Мою, мешаю, угощаю</small></div><b>›</b></button>
+  <button class="world-tile" id="parcelsBtn"><span>📦</span><div><strong>Посылки для друзей</strong><small>Кладу, закрываю, дарю · 3D</small></div><b>›</b></button>
+  <button class="world-tile" id="gardenBtn"><span>🌻</span><div><strong>Сад Матвея</strong><small>Сажаю, поливаю, собираю · 3D</small></div><b>›</b></button>
+ </div>
+ <p id="gameLoadError" role="status" hidden>Игра не загрузилась. Нажмите «Обновить приложение» и попробуйте снова.</p>
+</section>
+<div class="app-update"><span>Версия 13 · три игры в 3D</span><button id="appUpdate" type="button">Обновить приложение</button><span id="appUpdateStatus" role="status" aria-live="polite"></span></div>
+<p id="picnicLoadError" role="status" hidden>Не удалось загрузить игру. Проверьте загрузку обновления и попробуйте снова.</p>
     <div class="home-actions home-actions-v6">
-      <button class="btn picnic-home-btn" id="picnicBtn"><span class="home-emoji">🥣</span><span class="home-action-copy"><strong>Лесное кафе · 3D</strong><small>Беру · мою · мешаю · угощаю</small></span></button>
+
       <button class="btn live-primary" id="liveBtn"><span class="home-emoji"><img data-v8-art="animal-cow" alt="" draggable="false"></span><span class="home-action-copy"><strong>Живые карточки</strong><small>Слушаем · повторяем · называем</small></span><b class="home-chev">›</b></button>
       <button class="btn story-primary" id="adventureBtn"><span class="home-emoji"><img data-v8-art="plant-tree" alt="" draggable="false"></span><span class="home-action-copy"><strong>Приключения речи</strong><small>Ищем животных и растения</small></span><b class="home-chev">›</b></button>
       <button class="btn m-home-btn" id="montessoriBtn"><span class="home-emoji"><img data-v8-art="animal-rabbit" alt="" draggable="false"></span><span class="home-action-copy"><strong>Монтессори-игры</strong><small>Сортируем · подбираем · кормим</small></span><b class="home-chev">›</b></button>
@@ -81,6 +91,36 @@
   </aside>
  </div>
 </section>
+<section id="worldScr" class="screen" hidden aria-label="Развивающие 3D-игры">
+ <header class="picnic-top">
+  <button id="worldHome" class="icon-btn" aria-label="Выйти из 3D-игры на главную">⌂</button>
+  <div class="picnic-brand"><small>МАСТЕРСКАЯ МИШКИ МАТВЕЯ</small><strong id="worldName">Посылки для друзей</strong></div>
+  <span id="worldRound" class="picnic-order"></span>
+  <button id="worldReplay" class="icon-btn" aria-label="Повторить слова и задание">🔊</button>
+ </header>
+ <div class="picnic-main">
+  <div class="picnic-play">
+   <div class="picnic-view">
+    <div id="worldCanvas"></div>
+    <div id="worldTag" class="picnic-scene-tag">МАЛЕНЬКИЕ ОТКРЫТИЯ</div>
+    <div class="picnic-bubble">Скажем вместе?<strong id="worldWord">ДАЙ</strong></div>
+    <div id="worldError" class="picnic-error" hidden><p id="worldErrorText">Не удалось открыть 3D-сцену. Попробуйте снова или вернитесь на главную.</p><button id="worldRetry" class="picnic-action">Попробовать снова</button></div>
+   </div>
+   <div class="picnic-controls"><div id="worldActions" class="picnic-actions" aria-label="Действия в игре"></div><p id="worldStatus" role="status" aria-live="polite"></p><button id="worldNext" class="picnic-next" hidden disabled>Дальше ➜</button></div>
+  </div>
+  <aside class="picnic-sidebar">
+   <div class="picnic-guide"><img src="assets/bear-hero.webp" alt="Мишка Матвей"><p>Поиграем, поможем другу и попробуем сказать!</p></div>
+   <div id="worldSteps" class="picnic-steps" aria-label="Шаги приготовления"></div>
+   <h2 id="worldTitle">Попросим угощение</h2>
+   <p id="worldInstruction"></p>
+   <div id="worldSpeech" class="picnic-speech" hidden><strong id="worldSpeechWord"></strong>Теперь пауза. Можно попробовать звук, слово или жест.<br><button id="worldTry">Мы попробовали!</button></div>
+
+   <details><summary>Поиграем по-настоящему</summary><p id="worldReal"></p></details>
+   <div class="picnic-options"><label>Речь <select id="worldLevel" aria-label="Уровень речевой подсказки"><option value="0">Звуки</option><option value="1" selected>Слова</option><option value="2">Короткие фразы</option></select></label><label><input type="checkbox" id="worldHaptic">Лёгкая вибрация, если доступна</label></div>
+  </aside>
+ </div>
+</section>
+
 
 <!-- МИР ОТКРЫТИЙ: самостоятельные сенсорные задания -->
 <section id="montessoriScr" class="screen" hidden aria-label="Мир открытий с мишкой Матвеем">
@@ -427,17 +467,17 @@
  <div id="familyContent"></div>
  <p id="familyMessage" role="status" aria-live="polite"></p>
 </dialog>
-<script src="js/artwork.js"></script>
-<script src="js/lesson-data.js"></script>
-<script src="js/adventure-data.js"></script>
-<script src="js/montessori-data.js"></script>
-<script src="js/live-data.js"></script>
-<script src="js/discovery-data.js"></script>
-<script src="js/app.js"></script>
-<script src="js/pwa.js"></script>
-<script src="js/visuals.js"></script>
-<script src="js/family-rewards.js"></script>
-<script src="js/picnic-launcher.js"></script>
+<script src="js/artwork.js?v=13"></script>
+<script src="js/lesson-data.js?v=13"></script>
+<script src="js/adventure-data.js?v=13"></script>
+<script src="js/montessori-data.js?v=13"></script>
+<script src="js/live-data.js?v=13"></script>
+<script src="js/discovery-data.js?v=13"></script>
+<script src="js/app.js?v=13"></script>
+<script src="js/pwa.js?v=13"></script>
+<script src="js/visuals.js?v=13"></script>
+<script src="js/family-rewards.js?v=13"></script>
+<script src="js/picnic-launcher.js?v=13"></script>
 
 </body>
 </html>

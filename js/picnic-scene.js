@@ -1,4 +1,4 @@
-import * as T from './vendor/three.min.js';
+import * as T from './vendor/three.min.js?v=13';
 const palette={wood:0xd5a16d,edge:0x926344,cream:0xfff4dc,sage:0xaac6a2,blue:0x40b4ce,purple:0x9566c5};
 export class PicnicScene{
  constructor(host,{action,onError,reduced=false}){

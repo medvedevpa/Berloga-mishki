@@ -35,3 +35,18 @@
 @media(max-width:600px){.picnic-view{height:390px;min-height:350px}}
 @media(max-width:360px){.picnic-view{height:365px}}
 #picnicCanvas canvas{cursor:grab}#picnicCanvas canvas:active{cursor:grabbing}
+/* Both new playrooms use the same accessible shell as the cafe. */
+#worldScr{max-width:1500px;padding:0;gap:0;background:#f2eddd;color:#4c4236;position:relative;overflow:auto;touch-action:pan-y;border:0}
+#worldCanvas{position:absolute;inset:0}#worldCanvas canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas canvas:active{cursor:grabbing}
+#worldStatus{font-size:14px;line-height:1.5;max-width:680px;text-align:center;min-height:40px;margin:13px auto 2px;color:#786c59}
+#worldInstruction{font-size:16px;line-height:1.6;color:#7a6a53;margin:0}
+.world-catalog{width:100%;padding:18px;border:3px solid #fff6d6;border-radius:26px;background:#fff4dceb;box-shadow:0 5px 0 #a97c40}
+.world-catalog-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 13px;color:#694626;text-align:left}.world-catalog-heading h2{margin:0;font-size:25px}.world-catalog-heading span{font-size:12px;color:#8a6c43}
+.world-catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.world-tile{display:flex;align-items:center;text-align:left;gap:10px;background:linear-gradient(#fffdf4,#f4e1b4);border:2px solid #fff9e3;border-radius:18px;padding:14px 12px;min-height:90px;box-shadow:0 4px 0 #c19c62;color:#624326}.world-tile>span{font-size:35px}.world-tile>div{flex:1;min-width:0}.world-tile strong{display:block;font-size:18px;line-height:1.15}.world-tile small{display:block;margin-top:5px;font-size:12px;line-height:1.4;color:#8a714b}.world-tile b{font-size:27px;color:#9c7840}.world-tile:active{transform:translateY(2px);box-shadow:0 2px 0 #c19c62}
+.app-update{width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 14px;color:#73593c;background:#fff5dfdd;padding:10px 15px;border-radius:15px;font-size:12px}
+.app-update button{background:#fffdf5;color:#775332;border:1px solid #d8bb8b;border-radius:12px;padding:9px 12px;font-size:13px;min-height:40px}
+#gameLoadError{padding:12px;color:#805036;font-size:14px;line-height:1.5}
+@media(max-width:850px){.world-catalog-grid{grid-template-columns:1fr}.world-tile{min-height:70px}.world-tile strong{font-size:18px}}
+@media(max-width:600px){#worldScr{height:100dvh;overflow-y:auto}.world-catalog{padding:14px}.world-catalog-heading span{font-size:10px}.world-catalog-heading h2{font-size:23px}}
+@media(orientation:landscape) and (max-height:520px){#worldScr{overflow-y:auto}}
