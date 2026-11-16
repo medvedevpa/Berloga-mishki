@@ -6,7 +6,7 @@ let browser;
  async function next(){await page.waitForFunction(()=>!document.getElementById('worldNext').disabled);await page.click('#worldNext');}
  async function drag(source,target){const a=await page.evaluate(id=>window.__worldGames.project(id),source),b=await page.evaluate(id=>window.__worldGames.project(id),target);await page.mouse.move(a.x,a.y);await page.mouse.down();await page.mouse.move(b.x,b.y,{steps:12});await page.mouse.up();}
  for(const kind of ['parcels','garden']){
-  await page.click('#'+kind+'Btn');await page.waitForFunction(()=>window.__worldGames?.state().webgl);assert.equal(await page.locator('#worldCanvas canvas').count(),1);
+  await page.click('#'+kind+'Btn');await page.waitForFunction(()=>window.__worldGames?.state().webgl);await page.waitForFunction(k=>window.__worldGames.state().models?.loaded.length===(k==='garden'?3:1),kind);assert.equal(await page.locator('#worldCanvas canvas').count(),1);
   for(const width of [320,390,768,1280]){await page.setViewportSize({width,height:width>700?900:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(out,kind+'-'+width+'.png')});}await page.setViewportSize({width:390,height:844});
   await page.waitForTimeout(3100);assert.equal((await state()).step,0);assert(await page.locator('#worldNext').isHidden());
   const items=kind==='parcels'?['ball','block','ring']:['sunflower','berry','pea'];const homes=kind==='parcels'?['red','blue','yellow']:['pot0','pot1','pot2'];

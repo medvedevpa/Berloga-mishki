@@ -1,5 +1,5 @@
-import {WORLD_GAMES} from './world-games-data.js?v=14';
-import {ParcelWorld,GardenWorld} from './world-games-scene.js?v=14';
+import {WORLD_GAMES} from './world-games-data.js?v=15';
+import {ParcelWorld,GardenWorld} from './world-games-scene.js?v=15';
 const $=id=>document.getElementById(id);
 let world=null,active=false,kind='parcels',round=0,step=0,solved=false,selected=null,count=0,started=0,level=1,timer=0,epoch=0,abort=null;
 const bridge=()=>window.MatveyGameBridge;
@@ -73,4 +73,4 @@ export function open(game){
  $('worldRetry').addEventListener('click',create,o);window.addEventListener('pagehide',close,o);create();
 }
 export function close(){if(!active)return;active=false;epoch++;clearTimeout(timer);abort?.abort();world?.dispose();world=null;bridge().home();}
-window.__worldGames={state:()=>({kind,active,round,step,solved,selected,count,started,webgl:!!world}),project:id=>world?.project(id)};
+window.__worldGames={state:()=>({kind,active,round,step,solved,selected,count,started,webgl:!!world,models:world?.modelAssets}),project:id=>world?.project(id)};

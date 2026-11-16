@@ -1,6 +1,6 @@
-import * as T from './vendor/three.min.js?v=14';
-import {PicnicScene} from './picnic-scene.js?v=14';
-import {WORLD_GAMES} from './world-games-data.js?v=14';
+import * as T from './vendor/three.min.js?v=15';
+import {PicnicScene} from './picnic-scene.js?v=15';
+import {WORLD_GAMES} from './world-games-data.js?v=15';
 // Share renderer, primitive modelling, picking, observers and disposal with the cafe.
 class PlayWorld extends PicnicScene{
  build(){
@@ -26,7 +26,7 @@ class PlayWorld extends PicnicScene{
    this.box(home,[0xe8ae8a,0xa1c5ce,0xe7d28c][i],0,1.1,0,2,2.2,1.55,.18);
    this.art.houseDetails(home,i);
    this.box(home,0x8c7157,0,.83,.83,.84,1.55,.09,.18);this.orb(home,0xf3d58a,.27,.75,.92,.06);
-   const badge=this.toy(r.id,r.color);badge.scale.setScalar(.65);badge.position.set(0,1.95,.91);home.add(badge);
+   const badge=this.toy(r.id,r.color);badge.name='GiftBadge';badge.scale.setScalar(.65);badge.position.set(0,1.95,.91);home.add(badge);
    this.clickable(home,r.home);this.homes[r.home]=home;
   });
   this.cart=new T.Group();this.cart.position.set(0,.45,.6);this.scene.add(this.cart);
@@ -98,7 +98,7 @@ class PlayWorld extends PicnicScene{
  }
  grow(size){const o=this.growth[this.round];if(this.reduced)o.scale.setScalar(size);else this.scaleMotion={o,from:o.scale.x,to:size,t:0};}
  to(o,target){if(this.reduced){o.position.copy(target);this.render();return;}this.pending=this.pending.filter(t=>t.o!==o);this.pending.push({o,from:o.position.clone(),target,t:0});}
- down(e){if(e.pointerType==='mouse'&&e.button!==0)return;e.preventDefault();const hit=this.pick(e);const id=hit?.object.userData.pick;if(!id)return;this.renderer.domElement.setPointerCapture(e.pointerId);this.drag={id,pid:e.pointerId,x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,distance:0,moved:false};this.action('pick',id);}
+ down(e){if(e.pointerType==='mouse'&&e.button!==0)return;e.preventDefault();const hit=this.pick(e);let id=hit?.object.userData.pick;if(this.stage==='water'&&id==='harvest'+this.round)id=this.item.home;if(!id)return;this.renderer.domElement.setPointerCapture(e.pointerId);this.drag={id,pid:e.pointerId,x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,distance:0,moved:false};this.action('pick',id);}
  move(e){const d=this.drag;if(!d||d.pid!==e.pointerId)return;const dx=e.clientX-d.lastX,dy=e.clientY-d.lastY;d.distance+=Math.hypot(dx,dy);d.lastX=e.clientX;d.lastY=e.clientY;d.moved=Math.hypot(e.clientX-d.x,e.clientY-d.y)>10;
   if(this.stage==='close'&&d.id==='box'){if(d.distance>65){d.distance=0;this.action('rub','box');}return;}
   if(this.stage==='water'&&(d.id==='can'||d.id===this.item.home)){const p=this.project(this.item.home);if(d.id==='can'&&Math.hypot(e.clientX-p.x,e.clientY-p.y)>80)return;if(d.distance>65){d.distance=0;this.action('rub',this.item.home);}return;}

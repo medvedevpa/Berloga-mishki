@@ -1,8 +1,8 @@
 export const WORLD_GAMES={
  parcels:{title:'Посылки для друзей',subtitle:'БЕРУ · КЛАДУ · ЗАКРЫВАЮ · ДАРЮ',rounds:[
-  {id:'ball',name:'мяч',acc:'мяч',emoji:'🔴',color:0xe8735d,home:'red',house:'красный домик'},
-  {id:'block',name:'кубик',acc:'кубик',emoji:'🟦',color:0x579cc2,home:'blue',house:'голубой домик'},
-  {id:'ring',name:'колечко',acc:'колечко',emoji:'🟡',color:0xe5ba50,home:'yellow',house:'жёлтый домик'}
+  {id:'ball',name:'мяч',acc:'мяч',emoji:'🔴',color:0xe23a35,home:'red',house:'красный домик'},
+  {id:'block',name:'кубик',acc:'кубик',emoji:'🟦',color:0x277bd1,home:'blue',house:'голубой домик'},
+  {id:'ring',name:'колечко',acc:'колечко',emoji:'🟡',color:0xffc634,home:'yellow',house:'жёлтый домик'}
  ],steps:[
   {id:'choose',title:'Выбери подарок',instruction:'Найди {item} на подносе. Можно взять его пальчиком.',words:['ДАЙ','ДАЙ','Дай {item}'],real:'Положите перед ребёнком мяч и кубик. Протяните ладонь, скажите «ДАЙ» и подождите слова или жеста.'},
   {id:'pack',title:'Положи внутрь',instruction:'Перенеси подарок в открытую коробку или выбери предмет, затем коробку.',words:['ОП','В','Положи в коробку'],real:'Дайте настоящую пустую коробку и крупную игрушку. Покажите «В коробку» и предложите ребёнку положить её самому.'},

@@ -1,5 +1,6 @@
-import * as T from './vendor/three.min.js?v=14';
-import {StorybookArt} from './storybook-art.js?v=14';
+import * as T from './vendor/three.min.js?v=15';
+import {StorybookArt} from './storybook-art.js?v=15';
+import {loadSculptedModels} from './sculpted-models.js?v=15';
 const palette={wood:0xd5a16d,edge:0x926344,cream:0xfff4dc,sage:0xaac6a2,blue:0x40b4ce,purple:0x9566c5};
 export class PicnicScene{
  constructor(host,{action,onError,reduced=false}){
@@ -19,7 +20,7 @@ export class PicnicScene{
   canvas.addEventListener('pointerdown',e=>this.down(e),options);canvas.addEventListener('pointermove',e=>this.move(e),options);canvas.addEventListener('pointerup',e=>this.up(e),options);canvas.addEventListener('pointercancel',()=>this.cancel(),options);canvas.addEventListener('lostpointercapture',()=>this.cancel(),options);canvas.addEventListener('contextmenu',e=>e.preventDefault(),options);
   canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.renderer.setAnimationLoop(null);this.onError();},options);
   document.addEventListener('visibilitychange',()=>{if(document.hidden||!this.inView)this.renderer.setAnimationLoop(null);else{this.last=0;this.renderer.setAnimationLoop(t=>this.frame(t));}},options);
-  this.renderer.setAnimationLoop(t=>this.frame(t));
+  this.renderer.setAnimationLoop(t=>this.frame(t));this.modelsReady=loadSculptedModels(this);
  }
  mat(color,roughness=.62){return this.art?this.art.material(color,roughness):new T.MeshStandardMaterial({color,roughness});}
  mesh(g,m,parent=this.scene,x=0,y=0,z=0){const o=new T.Mesh(g,typeof m==='number'?this.mat(m):m);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;parent.add(o);return o;}
@@ -63,7 +64,7 @@ export class PicnicScene{
   // Fruit tray, with three graspable, volumetric food models.
   this.box(this.scene,0xb68250,0,1.44,2.4,5.9,.13,1.4,.22);this.box(this.scene,0xe3be88,0,1.52,2.4,5.6,.07,1.2,.18);
   ['apple','carrot','pear'].forEach((id,i)=>{const o=this.food(id);o.position.set((i-1)*1.7,1.88,2.4);o.userData.home=o.position.clone();this.foods[id]=o;this.scene.add(o);this.clickable(o,id)});
-  this.rabbit();this.rabbitRoot.scale.setScalar(1.12);this.rabbitRoot.position.y=-.23;this.plant(-4.6,1.4,-1.1);
+  this.rabbit();this.rabbitRoot.scale.setScalar(1.12);this.rabbitRoot.position.y=this.rabbitRestY??-.23;this.plant(-4.6,1.4,-1.1);
   this.rings={};for(const [id,pos] of [['sink',[-3,1.63,.35]],['bowl',[2.85,1.5,.5]],['guest',[0,1.63,.45]]]){const ring=this.torus(this.scene,0xffdf77,...pos,1.11,.035);ring.material.emissive=new T.Color(0xffc249);ring.material.emissiveIntensity=.45;ring.visible=false;this.rings[id]=ring;}
   this.sparkles=new T.Group();this.scene.add(this.sparkles);for(let i=0;i<12;i++){const o=this.orb(this.sparkles,i%2?0xffd05c:0xfff4cc,0,0,0,.06);o.visible=false;o.userData.i=i;}
  }
@@ -87,7 +88,7 @@ export class PicnicScene{
   this.clickable(g,'guest');
  }
  setStep({stage,food,selected}){
-  this.stage=stage;this.foodId=food;this.selected=selected;this.progress=0;this.stream.visible=false;this.salad.visible=stage==='serve';this.salad.scale.setScalar(1);this.bowl.position.set(2.85,1.43,.5);this.bowl.scale.setScalar(1);this.rabbitRoot.position.y=-.23;
+  this.stage=stage;this.foodId=food;this.selected=selected;this.progress=0;this.stream.visible=false;this.salad.visible=stage==='serve';this.salad.scale.setScalar(1);this.bowl.position.set(2.85,1.43,.5);this.bowl.scale.setScalar(1);this.rabbitRoot.position.y=this.rabbitRestY??-.23;
   for(const [id,o] of Object.entries(this.foods)){o.visible=stage==='choose'||id===food;o.position.copy(o.userData.home);o.scale.setScalar(1);}
   if(stage==='stir')this.foods[food].position.set(2.85,1.85,.5);
   if(stage==='serve')this.foods[food].visible=false;
@@ -119,9 +120,9 @@ export class PicnicScene{
   if(this.renderer.domElement.hasPointerCapture(e.pointerId))this.renderer.domElement.releasePointerCapture(e.pointerId);
  }
  cancel(){if(this.drag){const d=this.drag;if(this.foods[d.id]&&this.stage==='wash')this.tween(this.foods[d.id],this.foods[d.id].userData.home);if(d.id==='bowl'&&this.stage==='serve')this.tween(this.bowl,new T.Vector3(2.85,1.43,.5));this.drag=null;}}
- resize(){const {width:w,height:h}=this.host.getBoundingClientRect();if(!w||!h)return;this.renderer.setSize(w,h,false);this.camera.aspect=w/h;const portrait=w/h<.95;this.camera.position.set(0,portrait?6.8:6.5,portrait?11.6:12);this.camera.fov=portrait?47:39;this.camera.lookAt(0,portrait?2.7:2.4,.2);this.camera.updateProjectionMatrix();this.render();}
+ resize(){const {width:w,height:h}=this.host.getBoundingClientRect();if(!w||!h)return;this.renderer.setSize(w,h,false);this.camera.aspect=w/h;const portrait=w/h<.95;this.camera.position.set(0,portrait?5.3:5.8,portrait?11.6:12);this.camera.fov=portrait?47:39;this.camera.lookAt(0,portrait?2.55:2.45,.2);this.camera.updateProjectionMatrix();this.render();}
  frame(ms){if(document.hidden)return;if(this.reduced){this.renderer.setAnimationLoop(null);this.render();return;}if(this.last&&ms-this.last<41)return;const dt=Math.min((ms-(this.last||ms))/1000,.05);this.last=ms;this.time+=dt;for(const tw of this.tweens){tw.t=Math.min(1,tw.t+dt*2.8);const t=1-(1-tw.t)**3;tw.o.position.lerpVectors(tw.from,tw.to,t);tw.o.position.y+=Math.sin(t*Math.PI)*.35;}this.tweens=this.tweens.filter(t=>t.t<1);
-  if(!this.reduced){this.head.rotation.z=Math.sin(this.time*.9)*.025;if(this.eating>0){this.eating-=dt;this.head.rotation.x=Math.sin(this.time*9)*.055;this.arms[0].rotation.x=-.6;this.salad.scale.setScalar(Math.max(.15,this.eating/2.8));}else{this.head.rotation.x=0;this.arms[0].rotation.x=0;}this.ears[0].rotation.z=.14+Math.sin(this.time*1.2)*.025;this.ears[1].rotation.z=-.14-Math.sin(this.time*1.2)*.025;const blink=this.time%5>.12?1:.08;this.eyes.forEach(o=>o.scale.y=.19*blink);
+  if(!this.reduced){this.head.rotation.z=Math.sin(this.time*.9)*.025;if(this.eating>0){this.eating-=dt;this.head.rotation.x=Math.sin(this.time*9)*.055;this.arms[0].rotation.x=-.6;this.salad.scale.setScalar(Math.max(.15,this.eating/2.8));}else{this.head.rotation.x=0;this.arms[0].rotation.x=0;}this.ears[0].rotation.z=.14+Math.sin(this.time*1.2)*.025;this.ears[1].rotation.z=-.14-Math.sin(this.time*1.2)*.025;const blink=this.time%5>.12?1:.08;this.eyes.forEach(o=>o.scale.y=(o.userData.openScaleY??.19)*blink);
    if(this.celebration>0){this.celebration=Math.max(0,this.celebration-dt*.7);const t=1-this.celebration;this.sparkles.children.forEach(o=>{const i=o.userData.i,a=i*2.4;o.position.set(Math.cos(a)*t*1.7,Math.sin(t*Math.PI)*1.5+Math.sin(a)*t,.3+Math.sin(a)*t*.8);o.visible=this.celebration>0;o.scale.setScalar(.065*this.celebration)});this.arms[1].rotation.z=-Math.sin(t*Math.PI)*.8;}
   }
   this.render(false);

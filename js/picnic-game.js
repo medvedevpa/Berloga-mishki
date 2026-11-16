@@ -1,5 +1,5 @@
-import {FOODS,STEPS} from './picnic-data.js?v=14';
-import {PicnicScene} from './picnic-scene.js?v=14';
+import {FOODS,STEPS} from './picnic-data.js?v=15';
+import {PicnicScene} from './picnic-scene.js?v=15';
 const $=id=>document.getElementById(id);
 let world=null,active=false,round=0,step=0,solved=false,selected=null,placed=false,works=0,started=0,timer=0,level=1,epoch=0,granted=false,abort=null;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
@@ -81,6 +81,6 @@ function create(){
 }
 export function close(){if(!active)return;active=false;clearTimeout(timer);epoch++;abort?.abort();world?.dispose();world=null;bridge().home();}
 // State-only diagnostics are useful for repeatable regressions, not for awarding success.
-window.__picnic={state:()=>({active,round,step,solved,selected,placed,works,webgl:!!world,started}),project:id=>{
+window.__picnic={state:()=>({active,round,step,solved,selected,placed,works,webgl:!!world,models:world?.modelAssets,started}),project:id=>{
  if(!world)return null;const obj=world.foods[id]||({sink:world.sink,bowl:world.bowl,guest:world.head}[id]);if(!obj)return null;const v=obj.getWorldPosition(new (world.camera.position.constructor)()).project(world.camera);const r=world.renderer.domElement.getBoundingClientRect();return{x:r.x+(v.x+1)*r.width/2,y:r.y+(-v.y+1)*r.height/2};
 }};
