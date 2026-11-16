@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Играем и говорим — Мишка Матвей</title>
+<title>Играем и говорим — Мишка Матвей · 12 игр</title>
 <meta name="theme-color" content="#79c85d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Мишка Матвей"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><link rel="icon" type="image/png" href="./icon-192.png">
 <style>
 :root{
@@ -854,6 +854,138 @@ body::before{opacity:.6}
 /* Forest adventures now use the same richly illustrated world as the home screen. */
 #storyForest{background-image:linear-gradient(180deg,#f4ffff31,#fbffc522),var(--v8-scene)!important;background-position:center 50%!important;background-size:cover!important}
 #storyForest::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;z-index:1;background:linear-gradient(180deg,#fff2,transparent 30%,#defc9b19 100%)}
+/* === Мир открытий Матвея: 10 новых игр, v9 === */
+#discoveryScr{max-width:1100px;gap:8px;padding:clamp(8px,1.6vw,15px);background:linear-gradient(160deg,#b3e8ff88,#fff9d5bb 72%,#f0d9ff9a);isolation:isolate}
+#discoveryScr .top{flex-shrink:0;z-index:3}
+.disc-title{flex:1;min-width:0;display:grid;place-items:center;color:#fff4ce;font-size:clamp(15px,4vw,25px);font-weight:1000;text-shadow:0 2px #67350f;background:linear-gradient(#c98a44,#965522 58%,#79421c);border:3px solid #f7d89b;border-radius:50px;box-shadow:0 5px 0 #74401c;padding:8px 9px;line-height:1.08;text-align:center}
+.disc-scroll{min-height:0;flex:1;overflow:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:12px;padding:3px 3px 18px}
+.disc-hero{position:relative;min-height:146px;border:4px solid #fff6c9;border-radius:32px;overflow:hidden;background:linear-gradient(95deg,#8ed2fb77,#f9e9a566),var(--world-forest);background-position:center;background-size:cover;box-shadow:0 7px 0 #c68a4e,0 13px 20px #55371535;display:flex;align-items:center;gap:5px;padding:12px 12px 12px 3px}
+.disc-hero>img{width:clamp(112px,27vw,164px);height:148px;object-fit:contain;object-position:center 15%;align-self:end;margin:-12px -12px -30px -6px;filter:drop-shadow(0 7px 8px #442c314b);animation:bearFloat 4s ease-in-out infinite;flex:none}
+.disc-hero-copy{position:relative;z-index:1;flex:1;min-width:0;background:linear-gradient(#fffdf8ee,#fff5ddf5);border:3px solid #fff;border-radius:24px;padding:12px 10px;text-align:center;box-shadow:0 5px 0 #e0b977;color:#63401a;font-weight:900;font-size:clamp(12px,3vw,17px);line-height:1.2}
+.disc-hero-copy strong{display:block;font-size:clamp(18px,4vw,26px);color:#854218;margin-bottom:6px}
+.disc-subhead{align-self:center;max-width:95%;padding:9px 23px;border:3px solid #e6b56f;border-radius:999px;background:linear-gradient(#bf7c3a,#8c4b20);color:#fff1c4;font-size:clamp(15px,4vw,22px);font-weight:1000;text-shadow:0 2px #6b3415;box-shadow:0 5px 0 #73421b;text-align:center}
+.disc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.disc-entry{min-width:0;min-height:154px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;position:relative;padding:10px 6px 9px;overflow:hidden;border:4px solid #fff5cc;border-radius:24px;background:linear-gradient(155deg,#fffefd,#fff0c3);box-shadow:0 6px 0 #bd8954,0 12px 19px #5f432b31;color:#5c3014;touch-action:manipulation;transition:transform .15s}
+.disc-entry:nth-child(5n+2){background:linear-gradient(155deg,#f5fcff,#cfedff)}
+.disc-entry:nth-child(5n+3){background:linear-gradient(155deg,#f9ffed,#ddf8b2)}
+.disc-entry:nth-child(5n+4){background:linear-gradient(155deg,#fff2fb,#fbd8f6)}
+.disc-entry:nth-child(5n+5){background:linear-gradient(155deg,#fff8e8,#ffe5b7)}
+.disc-entry:active{transform:translateY(4px);box-shadow:0 2px 0 #bd8954}
+.disc-entry .disc-index{position:absolute;top:6px;left:7px;background:#fff8dbdd;border:2px solid white;border-radius:99px;color:#ae773f;padding:3px 7px;font-size:11px;font-weight:1000;z-index:2}
+.disc-entry .disc-mark{position:absolute;top:7px;right:7px;color:#359f3b;background:#fff;border-radius:99px;padding:3px;font-weight:1000;z-index:2}
+.disc-entry .disc-picture{display:grid;place-items:center;width:100%;height:94px;position:relative;isolation:isolate}
+.disc-entry .disc-picture:after{content:"";position:absolute;bottom:8%;width:76%;height:20%;border-radius:50%;background:#76af4780;filter:blur(10px);z-index:-1}
+.disc-entry .disc-picture img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 6px 5px #6e512e42);animation:dWiggle 5s ease-in-out infinite}
+.disc-entry .disc-picture span{font-size:clamp(46px,12vw,76px);filter:drop-shadow(0 6px 4px #654e456b)}
+.disc-entry strong{font-size:clamp(13px,3.6vw,19px);line-height:1.07;text-align:center;text-wrap:balance;background:linear-gradient(#fffef7,#ffe6ad);border:2px solid #fff9e4;border-radius:999px;box-shadow:0 3px 0 #d2a76e;padding:6px 7px;max-width:100%}
+.disc-entry small{font-size:11px;color:#825a2d;font-weight:900;margin-top:5px;text-align:center}
+.disc-play{display:flex;flex-direction:column;gap:10px;min-height:0}
+.disc-play[hidden],.disc-grid[hidden],#discCatalog[hidden],#discPlay[hidden]{display:none!important}
+.disc-game-top{display:flex;align-items:center;gap:9px;min-height:46px}
+.disc-back{border:3px solid #fff6d6;background:linear-gradient(#fffef8,#ffe9bc);box-shadow:0 4px 0 #bc9169;color:#854c27;border-radius:999px;padding:9px 11px;font-weight:1000;white-space:nowrap;font-size:13px}
+.disc-game-name{flex:1;min-width:0;text-align:center;background:linear-gradient(#c48749,#97511e);color:#fff3d2;border:3px solid #dfae70;border-radius:999px;padding:8px 10px;font-size:clamp(14px,3.6vw,20px);font-weight:1000;text-shadow:0 2px #6e3c18;box-shadow:0 5px 0 #70401d}
+.disc-steps{display:flex;gap:5px;align-items:center;justify-content:center}
+.disc-steps i{width:14px;height:14px;background:#ebd5ac;border-radius:50%;border:2px solid white;box-shadow:0 2px 0 #c6a677}
+.disc-steps i.on{background:#ffa927;box-shadow:0 2px 0 #c57b1e}.disc-steps i.done{background:#5ace66;box-shadow:0 2px 0 #34964b}
+.disc-instruction{display:flex;align-items:center;gap:7px;background:linear-gradient(145deg,#fffefd,#fff2d2);border:3px solid white;border-radius:25px;padding:7px 7px 7px 3px;box-shadow:0 5px 0 #d5b78d;color:#75401d;font-size:clamp(15px,3.6vw,21px);font-weight:1000;min-height:75px}
+.disc-instruction img{width:72px;height:76px;object-fit:contain;object-position:center 15%;margin:-8px -8px -10px -8px;filter:drop-shadow(0 4px 5px #8c5d4b50);flex-shrink:0;animation:bearFloat 4s ease-in-out infinite}
+.disc-instruction span{flex:1;line-height:1.16;text-align:center}
+.disc-audio{border:2px solid white;background:linear-gradient(#d6b6ff,#a576ed);color:white;border-radius:100%;width:47px;height:47px;flex:none;font-size:22px;box-shadow:0 4px 0 #794cb6}
+.disc-scene{position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:clamp(250px,37vh,390px);padding:14px 8px 18px;border:4px solid #fff3cc;border-radius:29px;background:linear-gradient(180deg,#bbebffb5,#b1e6c380 55%,#f2d88cab),var(--world-forest);background-size:cover;background-position:center;box-shadow:0 8px 0 #be8649,0 14px 24px #69452748;overflow:hidden;isolation:isolate}
+.disc-scene:before{content:"✨";position:absolute;top:8px;left:9px;font-size:21px;opacity:.65;pointer-events:none;animation:dWiggle 3s infinite}
+.disc-scene:after{content:"🦋";position:absolute;top:11px;right:13px;font-size:22px;opacity:.65;pointer-events:none;animation:dWiggle 4s infinite reverse}
+.disc-stage{position:relative;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;width:100%;z-index:1}
+.disc-scene .disc-label{position:relative;z-index:2;background:linear-gradient(#fffef9,#ffe8b1);border:3px solid white;border-radius:999px;box-shadow:0 4px 0 #cc9b58;padding:7px 14px;color:#72421a;font-weight:1000;font-size:clamp(15px,3.4vw,21px);text-align:center}
+.disc-scene button{touch-action:manipulation}
+.disc-tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;width:clamp(91px,27vw,172px);height:clamp(122px,28vh,195px);padding:9px 7px 10px;background:linear-gradient(#fffefa,#fff0c7);border:4px solid #fff7d8;border-radius:23px;box-shadow:0 6px 0 #c59050,0 12px 18px #75563040;color:#663d20;transition:transform .15s}
+.disc-tile:active{transform:translateY(4px);box-shadow:0 2px 0 #c59050}
+.disc-tile img{height:73%;width:100%;object-fit:contain;filter:drop-shadow(0 6px 5px #54422640);pointer-events:none}
+.disc-tile .disc-emoji{font-size:clamp(46px,10vw,92px);line-height:1.08;filter:drop-shadow(0 5px 5px #47392446)}
+.disc-tile strong{font-weight:1000;font-size:clamp(13px,3.3vw,18px);text-align:center}
+.disc-tile.good,.disc-tile.matched{background:linear-gradient(#f5ffe0,#c6ffb3);border-color:#f7ffcf;box-shadow:0 0 0 4px #5edc68,0 6px 0 #36aa42}
+.disc-tile.chosen{outline:5px solid #ffbd38;outline-offset:0;transform:translateY(-5px)}
+.disc-tile.matched{opacity:.75;pointer-events:none}
+.disc-tile.wrong{animation:dShake .4s ease}
+.disc-tile.big img{transform:scale(1.22)}.disc-tile.small img{transform:scale(.66)}
+.disc-feature-animal{height:clamp(125px,25vh,200px);width:65%;display:grid;place-items:center}.disc-feature-animal img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 7px 6px #55362269)}
+.disc-shadow{width:clamp(120px,34vw,220px);height:clamp(118px,24vh,215px);background:linear-gradient(#fffadab5,#fff4bf80);border:3px dashed #b98a4d;border-radius:24px;display:grid;place-items:center}
+.disc-shadow img{height:94%;width:94%;object-fit:contain;filter:brightness(0) opacity(.65)}
+.disc-choices{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;width:100%;padding:8px 0;position:relative;z-index:3}
+.disc-choices .disc-tile{width:clamp(86px,25vw,150px);height:clamp(100px,18vh,156px)}
+.disc-choices .disc-tile img{height:77%}
+.disc-scene .disc-choices{padding:0}
+.disc-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;width:100%}
+.disc-row .disc-tile{width:clamp(83px,24vw,150px);height:clamp(104px,18vh,155px)}
+.disc-emoji-card{width:clamp(75px,21vw,132px);height:clamp(98px,17vh,148px)}
+.disc-emoji-card .disc-emoji{font-size:clamp(40px,9vw,69px)}
+.disc-counter{font-size:clamp(20px,5vw,34px);font-weight:1000;color:#fff5d1;text-shadow:0 2px 0 #75401a,0 5px 12px #413116;background:linear-gradient(#b77939,#8e4b1d);border:3px solid #f6d39d;border-radius:999px;padding:9px 19px;box-shadow:0 5px 0 #6c3a1a}
+.disc-apple-grid{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;max-width:550px}
+.disc-apple{font-size:clamp(41px,11vw,72px);height:82px;min-width:64px;filter:drop-shadow(0 5px 4px #643b2f45);border:none;background:transparent;animation:dWiggle 3.5s ease-in-out infinite}
+.disc-apple.used{opacity:.16;pointer-events:none;transform:scale(.65)!important}
+.disc-pattern{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:nowrap}
+.disc-pattern span{font-size:clamp(32px,8vw,58px);padding:7px;background:#fff9eacf;border:2px solid white;border-radius:14px;box-shadow:0 3px 0 #d3ae76}
+.disc-shelf{display:flex;gap:11px;justify-content:center;align-items:flex-end;min-height:110px;width:96%;border-bottom:17px solid #a86631;border-radius:13px;background:linear-gradient(transparent 60%,#ffe0a6 61%);padding:10px}
+.disc-shelf .disc-placed{display:grid;place-items:end center;width:27%;height:100px;animation:dPop .45s both}
+.disc-shelf .disc-placed img{width:100%;height:100%;object-fit:contain}
+.disc-path{position:relative;width:100%;height:220px;max-width:650px}
+.disc-path:before{content:"";position:absolute;left:10%;right:10%;top:55%;border-top:8px dashed #f9e7b6;border-radius:50%}
+.disc-stone{position:absolute;width:clamp(56px,15vw,92px);height:clamp(56px,15vw,92px);background:linear-gradient(#fff9ce,#ca9b5a);border:4px solid #fff6dd;border-radius:45% 55% 48% 52%;box-shadow:0 6px 0 #9b724d,0 11px 16px #745a3d61;display:grid;place-items:center;font-size:clamp(23px,6vw,36px);font-weight:1000;color:#725027;transform:translate(-50%,-50%)}
+.disc-stone:active{transform:translate(-50%,-45%)}.disc-stone.passed{background:linear-gradient(#eaffc9,#93df69);box-shadow:0 6px 0 #5fac45}
+.disc-character{position:absolute;left:1%;bottom:4%;height:70px;width:85px;object-fit:contain;transition:left .55s ease,bottom .55s ease;filter:drop-shadow(0 5px 5px #5743294d);pointer-events:none;z-index:3}
+.disc-finish{position:absolute;right:0;bottom:9%;font-size:64px;filter:drop-shadow(0 5px 6px #57352646)}
+.disc-wash{position:relative;width:min(68%,260px);height:clamp(170px,28vh,255px);display:grid;place-items:center}
+.disc-wash img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 7px 6px #59442b60)}
+.disc-mud{position:absolute;width:clamp(45px,10vw,65px);height:clamp(40px,10vw,60px);background:radial-gradient(ellipse at 30% 30%,#d6a366,#a06437 65%,#84522e);border:3px solid #f1d5a2;border-radius:57% 37% 55% 43%;box-shadow:0 4px 0 #76512d91;display:grid;place-items:center;font-size:23px;touch-action:none;animation:dWiggle 3s infinite}
+.disc-mud.gone{animation:dWash .45s forwards;pointer-events:none}
+.disc-success{position:absolute;inset:0;background:linear-gradient(180deg,#fffbc2e5,#ecffd1f5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:8;animation:dPop .35s ease both;text-align:center;padding:16px}
+.disc-success .disc-wow{font-size:clamp(44px,12vw,88px);animation:dPop .6s ease both;filter:drop-shadow(0 6px 8px #e3ae47)}
+.disc-success h3{font-size:clamp(23px,6vw,43px);color:#915320;text-shadow:0 2px white;margin:0}
+.disc-success p{font-size:clamp(16px,4vw,23px);font-weight:900;color:#7a552d;margin:0}
+.disc-status{background:linear-gradient(155deg,#fffefa,#fff1d4);border:3px solid white;border-radius:22px;padding:11px;box-shadow:0 4px 0 #d5b585;color:#734a2a;min-height:53px;text-align:center;font-weight:1000;font-size:clamp(14px,3.6vw,19px)}
+.disc-status.good{background:linear-gradient(#faffeb,#d8ffbd);color:#37752d}
+.disc-controls{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;padding-bottom:15px}
+.disc-controls button{font-size:clamp(15px,4vw,20px);padding:10px 16px;border-radius:20px}
+#discNext:disabled{opacity:.55;filter:grayscale(.35)}
+.disc-home-btn{grid-column:1/-1!important;background:linear-gradient(155deg,#ebf9ff,#b7e5ff)!important;box-shadow:0 5px 0 #67a2cb,0 9px 14px #38668738!important;color:#255f80!important}
+.disc-home-btn strong,.disc-home-btn small{color:#255f80!important}
+.disc-more{width:100%;min-height:61px;padding:10px;border-radius:22px;background:linear-gradient(180deg,#fff6d3,#ffda7b);border:3px solid white;color:#754219;font-weight:1000;font-size:clamp(16px,4vw,23px);box-shadow:0 5px 0 #bf8842,0 9px 15px #613d2533}
+@keyframes dWiggle{0%,100%{transform:rotate(0) translateY(0)}50%{transform:rotate(3deg) translateY(-4px)}}
+@keyframes dPop{0%{opacity:0;transform:scale(.5)}75%{opacity:1;transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes dShake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes dWash{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.7) rotate(30deg)}}
+@media(max-width:390px){.disc-hero{min-height:130px}.disc-hero>img{height:133px;width:106px}.disc-entry{min-height:135px}.disc-entry .disc-picture{height:77px}.disc-entry small{font-size:10px}.disc-play{gap:8px}.disc-scene{min-height:240px}.disc-tile{width:clamp(85px,27vw,125px);height:128px;padding:6px 4px}.disc-row .disc-tile{width:clamp(78px,25vw,118px);height:130px}.disc-pattern span{padding:4px}}
+@media(min-width:800px){.disc-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}.disc-entry{min-height:200px}.disc-entry .disc-picture{height:124px}.disc-scene{min-height:410px}.disc-hero{min-height:178px}.disc-hero>img{height:178px;width:184px}.disc-scroll{gap:17px}}
+@media(prefers-reduced-motion:reduce){.disc-entry .disc-picture img,.disc-hero>img,.disc-scene:before,.disc-scene:after,.disc-apple,.disc-mud,.disc-instruction img,.disc-success .disc-wow{animation:none!important}}
+
+
+/* v10 — удобный родительский аудит карточек + новые игры */
+.review-tools{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0}
+.review-tools input,.review-tools select{width:100%;font:inherit;background:#fffbeb;color:#59371b;border:2px solid #d9b782;border-radius:14px;padding:9px 12px;min-width:0}
+.review-tools input{flex:2 1 165px}.review-tools select{flex:1 1 110px}
+.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;max-height:41vh;overflow-y:auto;padding:4px;overscroll-behavior:contain}
+.review-card{background:linear-gradient(#fffdf5,#ffedcf);border:2px solid #ffedc0;box-shadow:0 3px 0 #d3a36c;border-radius:18px;padding:9px;display:grid;gap:7px;color:#513114}
+.review-top{display:flex;align-items:center;gap:9px;font-weight:900}.review-top img{width:55px;height:55px;object-fit:contain;background:#d6f4bf;border-radius:14px}
+.review-card input,.review-card select,.review-card textarea{box-sizing:border-box;width:100%;font:inherit;font-size:14px;border:2px solid #edd9b8;border-radius:11px;padding:7px;background:#fff;color:#472719}
+.review-card textarea{min-height:45px;resize:vertical}.review-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.review-actions button,.review-tool-btn{border:2px solid #fff9e6;background:linear-gradient(#fffef1,#ffdf98);padding:9px 6px;border-radius:13px;color:#613614;font-weight:900;box-shadow:0 3px 0 #cf9455}
+.review-card.is-flagged{border-color:#eea442;background:linear-gradient(#fff5d8,#ffe6ba)}
+.review-card.is-hidden{filter:saturate(.65);border-color:#bcaab3;background:linear-gradient(#f7f3f0,#e6dfdc)}
+.review-summary{font-size:13px;font-weight:800;color:#76532c}
+.review-hint{font-size:12px;line-height:1.3;color:#66432a}
+.rec-enhance{display:flex;gap:10px;align-items:center;background:#fff8e5;padding:10px 14px;border:2px solid #eed9ad;border-radius:16px;max-width:460px;font-weight:800;font-size:14px}
+.rec-enhance input{width:23px;height:23px;accent-color:#3aa75a}
+.disc-sound-choice{background:linear-gradient(150deg,#fff7db,#ffda7c);font-weight:1000;color:#81411a;min-height:94px;display:grid;place-items:center;border:3px solid white;border-radius:23px;box-shadow:0 5px 0 #c89143;font-size:clamp(19px,5vw,26px);touch-action:manipulation}
+.disc-feature-art{display:flex;align-items:center;justify-content:center;min-height:155px;position:relative;background:linear-gradient(#c9efff,#f8ffdc);border:3px solid #fff8d8;border-radius:24px;overflow:hidden}
+.disc-feature-art img{max-width:75%;width:auto;height:clamp(140px,28vh,240px);object-fit:contain;filter:drop-shadow(0 8px 7px #334c3f44);animation:v10Breath 2.7s ease-in-out infinite}
+@keyframes v10Breath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.035)}}
+.disc-action-callout{background:linear-gradient(125deg,#fffdf0,#f4dbff);padding:16px;border-radius:21px;color:#633797;border:3px solid #fff;font-weight:950;font-size:clamp(16px,4vw,23px);text-align:center;box-shadow:0 5px 0 #d2b5eb}
+.disc-gesture-scene{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:center}
+.disc-gesture-object{font-size:clamp(62px,15vw,115px);display:grid;place-items:center;min-height:148px;border-radius:23px;background:linear-gradient(#e0f6ff,#f8e9c7);border:3px solid #fff6dd;box-shadow:0 5px 0 #b6cfba}
+.disc-gesture-speech{display:grid;place-items:center;font-size:clamp(18px,4vw,30px);font-weight:950;color:#794294;border-radius:24px;background:#fff;border:3px solid #edd8ff;padding:13px;min-height:95px;text-align:center}
+#discCatalog .disc-grid{grid-template-columns:repeat(auto-fit,minmax(135px,1fr))}
+@media(max-width:380px){.review-grid{grid-template-columns:1fr}.disc-gesture-scene{gap:5px}.disc-gesture-object{min-height:110px}}
+@media(prefers-reduced-motion:reduce){.disc-feature-art img{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -875,6 +1007,7 @@ body::before{opacity:.6}
       <button class="btn live-primary" id="liveBtn"><span class="home-emoji"><img data-v8-art="animal-cow" alt="" draggable="false"></span><span class="home-action-copy"><strong>Живые карточки</strong><small>Слушаем · повторяем · называем</small></span><b class="home-chev">›</b></button>
       <button class="btn story-primary" id="adventureBtn"><span class="home-emoji"><img data-v8-art="plant-tree" alt="" draggable="false"></span><span class="home-action-copy"><strong>Приключения речи</strong><small>Ищем животных и растения</small></span><b class="home-chev">›</b></button>
       <button class="btn m-home-btn" id="montessoriBtn"><span class="home-emoji"><img data-v8-art="animal-rabbit" alt="" draggable="false"></span><span class="home-action-copy"><strong>Монтессори-игры</strong><small>Сортируем · подбираем · кормим</small></span><b class="home-chev">›</b></button>
+      <button class="btn disc-home-btn" id="discoveryBtn"><span class="home-emoji">🌟</span><span class="home-action-copy"><strong>Лесная школа — 12 игр</strong><small>Сравниваем · считаем · рассуждаем</small></span><b class="home-chev">›</b></button>
       <button class="btn magic-primary" id="magicBtn"><span class="home-emoji"><img data-v8-art="animal-mushroom" alt="" draggable="false"></span><span class="home-action-copy"><strong>Волшебная мастерская</strong><small>Домики · цветы · пирамидка</small></span><b class="home-chev">›</b></button>
       <button class="btn play-primary" id="playBtn"><span class="home-emoji">🎤</span><span>Играть вместе</span></button>
       <button class="btn room-primary" id="roomBtn"><span class="home-emoji">🎵</span><span>Звуковая комната</span></button>
@@ -899,6 +1032,7 @@ body::before{opacity:.6}
     <div class="chip" style="font-size:17px">⭐ <span id="mStars">0</span></div>
   </div>
   <div class="m-scroll" id="mScroll">
+    <button class="disc-more" id="discMoreBtn">🌟 Открыть ещё 12 игр с Матвеем ➜</button>
     <div class="m-menu" aria-label="Выбор игры">
       <button class="m-mode active" data-m-mode="colors"><span>🎨</span>Цвета</button>
       <button class="m-mode" data-m-mode="shapes"><span>🧩</span>Фигуры</button>
@@ -924,6 +1058,38 @@ body::before{opacity:.6}
     <div class="m-message" id="mMessage" role="status" aria-live="polite">Можно перетащить или нажать сначала на предмет, потом на место.</div>
   </div>
   <div class="m-footer"><div class="m-steps" id="mProgress">Готово: 0 из 6</div><button class="m-repeat" id="mRepeat">↻ Повторить</button><button class="m-next" id="mNext" hidden>Дальше ➜</button></div>
+</section>
+
+
+<!-- Ещё десять самостоятельных развивающих мини-игр -->
+<section id="discoveryScr" class="screen" hidden aria-label="Лесная школа Матвея: двенадцать развивающих игр">
+ <div class="top">
+  <button class="icon-btn" id="discHome" aria-label="Вернуться домой">🏠</button>
+  <div class="disc-title">🌟 Лесная школа Матвея</div>
+  <div class="chip" style="font-size:17px">⭐ <span id="discStars">0</span></div>
+ </div>
+ <div class="disc-scroll" id="discScroll">
+  <div id="discCatalog">
+   <div class="disc-hero">
+    <img id="discBearMenu" alt="Мишка Матвей приглашает играть" draggable="false">
+    <div class="disc-hero-copy"><strong>12 волшебных игр!</strong>Трогай, сравнивай, считай и называй вместе с Матвеем. Выбирай любую игру!</div>
+   </div>
+   <div class="disc-subhead" style="margin:14px auto 13px;display:table">Выбирай, во что играть 🐾</div>
+   <div class="disc-grid" id="discGrid"></div>
+  </div>
+  <div class="disc-play" id="discPlay" hidden>
+   <div class="disc-game-top"><button class="disc-back" id="discBack">‹ Все игры</button><div class="disc-game-name" id="discGameName"></div></div>
+   <div class="disc-steps" id="discSteps" aria-label="Прогресс в игре"></div>
+   <div class="disc-instruction">
+    <img id="discBearPlay" alt="Мишка Матвей" draggable="false"><span id="discPrompt"></span>
+    <button class="disc-audio" id="discReplay" aria-label="Повторить задание">🔊</button>
+   </div>
+   <div class="disc-scene" id="discScene"></div>
+   <div class="disc-choices" id="discChoices"></div>
+   <div class="disc-status" id="discStatus" role="status" aria-live="polite">Выбери предмет!</div>
+   <div class="disc-controls"><button class="btn green" id="discNext" hidden disabled>Дальше ➜</button><button class="btn ghost" id="discRestart">↻ Заново</button></div>
+  </div>
+ </div>
 </section>
 
 
@@ -1021,6 +1187,7 @@ body::before{opacity:.6}
     <div class="rec-big" id="recEmoji">🎙️</div>
     <div class="rec-word" id="recWord"></div>
     <div class="sub" id="recMsg">Скажите слово ласково и чётко (1–2 секунды)</div>
+     <label class="rec-enhance"><input type="checkbox" id="recEnhance" checked> Улучшать запись: подавление шума и выравнивание громкости</label>
     <div class="actions">
       <button class="btn ghost" id="recPrev">◀</button>
       <button class="rec-btn" id="recBtn" aria-label="Запись">●</button>
@@ -1106,6 +1273,17 @@ body::before{opacity:.6}
         <button class="btn blue" id="recOpen" style="font-size:18px;padding:12px 18px">🎙 Записать свой голос (лучший вариант)</button>
         <small>Записанные вами слова игра произносит вашим голосом вместо голоса устройства. Записи хранятся только на этом устройстве.</small>
       </div>
+    </details>
+
+
+    <details id="reviewDetails">
+      <summary>🛠 Проверка карточек без базы данных</summary>
+      <div class="review-hint">Отметь карточку, если слово или озвучка не нравится. Скрытые карточки исчезнут из раздела «Живые карточки». Пометки и свои тексты хранятся только на этом устройстве. Удаление данных браузера их удалит — сохраняй резервную копию.</div>
+      <div class="review-tools"><input id="reviewSearch" type="search" placeholder="Найти: корова, лиса, гриб…" aria-label="Поиск карточек"><select id="reviewFilter" aria-label="Фильтр"><option value="all">Все карточки</option><option value="flagged">⚑ Требуют проверки</option><option value="hidden">🙈 Скрытые</option><option value="ok">✓ Проверенные</option></select></div>
+      <div class="review-summary" id="reviewSummary"></div>
+      <div class="review-grid" id="reviewList"></div>
+      <div class="review-tools"><button class="review-tool-btn" id="reviewExport" type="button">⬇ Выгрузить замечания</button><button class="review-tool-btn" id="reviewImportBtn" type="button">⬆ Загрузить копию</button><input id="reviewImport" type="file" accept="application/json,.json" hidden></div>
+      <small>Изменённая озвучка используется в живых карточках. У отдельных заданий лесной истории есть собственные фразы: пометки помогут найти их при дальнейшей правке проекта.</small>
     </details>
 
     <details>
@@ -1626,7 +1804,7 @@ function buildLesson(){
 
 /* ======================= СОСТОЯНИЕ ЭКРАНОВ ======================= */
 let L=null,waitTm=null,sessionStart=Date.now(),bubTm=null,childMode=false,wakeLock=null,breakShown=false;
-const SCREENS=['home','lesson','end','roomScr','bubScr','recScr','adventureScr','montessoriScr','liveScr','magicScr'];
+const SCREENS=['home','lesson','end','roomScr','bubScr','recScr','adventureScr','montessoriScr','discoveryScr','liveScr','magicScr'];
 function show(id){SCREENS.forEach(s=>$(s).hidden=(s!==id));}
 const alive=tok=>!!L&&L.tok===tok&&childMode&&!breakShown;
 function overLimit(){return !!S.sessionMin&&(Date.now()-sessionStart)>=S.sessionMin*60000*FAST()*(window.__fast?50:1);}
@@ -2044,6 +2222,8 @@ function openBubbles(){
 
 /* ======================= ЗАПИСЬ ГОЛОСА ======================= */
 const REC={list:[],i:0,mr:null,busy:false};
+$('recEnhance').checked=S.voiceEnhance!==false;
+$('recEnhance').onchange=()=>{S.voiceEnhance=$('recEnhance').checked;save()};
 function openRec(){
   $('parent').hidden=true;
   REC.list=phraseList();REC.i=Math.min(REC.i,REC.list.length-1);
@@ -2063,18 +2243,40 @@ async function recToggle(){
   if(REC.mr&&REC.mr.state==='recording'){REC.mr.stop();return;}
   try{
     stopSpeak();
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    const mr=new MediaRecorder(stream);const chunks=[];
+    const enhance=$('recEnhance').checked;
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:enhance,autoGainControl:enhance,channelCount:1}});
+    let audioCtx=null,recordStream=stream;
+    // WebAudio: фильтруем низкий гул, выравниваем громкость мягким компрессором.
+    // Нативное шумоподавление браузера по возможности убирает фоновый шум.
+    if(enhance&&window.AudioContext){
+      try{
+        audioCtx=new AudioContext();await audioCtx.resume();
+        const source=audioCtx.createMediaStreamSource(stream);
+        const highpass=audioCtx.createBiquadFilter();highpass.type='highpass';highpass.frequency.value=105;highpass.Q.value=.7;
+        const lowpass=audioCtx.createBiquadFilter();lowpass.type='lowpass';lowpass.frequency.value=7300;
+        const comp=audioCtx.createDynamicsCompressor();comp.threshold.value=-28;comp.knee.value=22;comp.ratio.value=2.7;comp.attack.value=.008;comp.release.value=.22;
+        const gain=audioCtx.createGain();gain.gain.value=1.18;
+        const destination=audioCtx.createMediaStreamDestination();
+        source.connect(highpass);highpass.connect(lowpass);lowpass.connect(comp);comp.connect(gain);gain.connect(destination);
+        recordStream=destination.stream;
+      }catch(e){if(audioCtx){audioCtx.close().catch(()=>{});audioCtx=null;}recordStream=stream;}
+    }
+    if(!window.MediaRecorder)throw Error('Браузер не поддерживает запись');
+    const types=['audio/mp4','audio/webm;codecs=opus','audio/webm'];
+    const mime=types.find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
+    const mr=new MediaRecorder(recordStream,mime?{mimeType:mime}:undefined);const chunks=[];
     REC.mr=mr;
     mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
     mr.onstop=async()=>{
       stream.getTracks().forEach(t=>t.stop());
+      recordStream.getTracks().forEach(t=>t.stop());
+      if(audioCtx)audioCtx.close().catch(()=>{});
       $('recBtn').classList.remove('on');
       if(!chunks.length){renderRec('Ничего не записалось, попробуйте ещё раз');return;}
-      try{await putClip(p.k,new Blob(chunks,{type:mr.mimeType||'audio/webm'}));renderRec('Сохранено ✓');}
+      try{await putClip(p.k,new Blob(chunks,{type:mr.mimeType||mime||'audio/webm'}));renderRec(enhance?'Сохранено ✓ · звук обработан':'Сохранено ✓');}
       catch(e){renderRec('Не удалось сохранить запись на этом устройстве');}
     };
-    mr.start();$('recBtn').classList.add('on');$('recMsg').textContent='Говорите…';
+    mr.start();$('recBtn').classList.add('on');$('recMsg').textContent=enhance?'Говорите… подавление шума включено':'Говорите…';
     setTimeout(()=>{if(mr.state==='recording')mr.stop();},3500);
   }catch(e){renderRec('Нет доступа к микрофону. Разрешите его в браузере (работает при открытии файла с устройства или по https).');}
 }
@@ -2561,11 +2763,12 @@ const LIVE_DATA=[
 ];
 let LIVE_TOKEN=0,liveActive=null;
 function liveOpen(){stopSpeak();show('liveScr');$('liveBear').src=MATVEY_ART['bear-hero'];$('liveStars').textContent=S.stars;
- const box=$('liveCards');box.innerHTML='';LIVE_DATA.forEach(x=>{
+ const box=$('liveCards');box.innerHTML='';LIVE_DATA.filter(x=>!cardFiltered(x.key)).forEach(x=>{
   const btn=document.createElement('button');btn.type='button';btn.className='v6-live-card';btn.dataset.liveKey=x.key;
   btn.setAttribute('aria-label',x.word+' — '+x.sound);btn.innerHTML='<span class="v6-star a">⭐</span><span class="v6-star b">✨</span><div class="v6-speech">'+x.sound+'!</div><img class="v6-animal" alt="'+x.word+'" draggable="false" src="'+MATVEY_ART['animal-'+x.key]+'"><span class="v6-card-title">'+x.word+'</span>';
   bindKidTap(btn,()=>liveSpeak(x,btn));box.appendChild(btn);
  });
+ if(!box.children.length)box.innerHTML='<p class="v6-soft-note">Все карточки скрыты в настройках родителей. Откройте ⚙️ → Проверка карточек.</p>';
  $('liveInstruction').textContent='Послушай, кто как говорит!';if(S.voiceOn)say('Привет! Нажми на животное. Послушай и повтори!');
 }
 function liveSpeak(x,btn){
@@ -2573,9 +2776,58 @@ function liveSpeak(x,btn){
  if(liveActive&&liveActive!==btn)liveActive.classList.remove('is-talking');liveActive=btn;
  btn.classList.remove('is-talking');void btn.offsetWidth;btn.classList.add('is-talking');
  $('liveInstruction').textContent=x.word+'! '+x.sound+'! Попробуй повторить!';
- say(x.voice);setTimeout(()=>{if(tok===LIVE_TOKEN){btn.classList.remove('is-talking');}},2150);
+ say(reviewPhrase(x));setTimeout(()=>{if(tok===LIVE_TOKEN){btn.classList.remove('is-talking');}},2150);
 }
 $('liveBtn').onclick=liveOpen;$('liveHome').onclick=()=>{LIVE_TOKEN++;stopSpeak();renderHome()};$('liveRepeat').onclick=()=>say('Нажми на животное, послушай и повтори!');
+
+
+/* v10 · локальная редакторская проверка карточек: без базы, без отправки данных */
+S.reviewCards=S.reviewCards&&typeof S.reviewCards==='object'?S.reviewCards:{};
+function cardReview(key){return S.reviewCards[key]||{};}
+function cardFiltered(key){return cardReview(key).status==='hidden';}
+function reviewPhrase(x){return (cardReview(x.key).voice||'').trim()||x.voice;}
+function reviewEntries(){
+ const items=LIVE_DATA.map(x=>({key:x.key,word:x.word,voice:x.voice,img:'animal-'+x.key}));
+ Object.keys(STORY_LABELS).forEach(k=>{if(items.some(x=>x.key===k))return;items.push({key:k,word:STORY_LABELS[k],voice:'',img:STORY_IMAGES[k]});});
+ return items;
+}
+function reviewRender(){
+ const host=$('reviewList');if(!host)return;
+ const term=($('reviewSearch').value||'').toLowerCase().trim(),filter=$('reviewFilter').value;
+ const entries=reviewEntries().filter(x=>(x.word+' '+x.key).toLowerCase().includes(term)&& (filter==='all'||(cardReview(x.key).status||'new')===filter));
+ const count=reviewEntries();$('reviewSummary').textContent=count.length+' карточек · ⚑ '+count.filter(x=>cardReview(x.key).status==='flagged').length+' на проверке · 🙈 '+count.filter(x=>cardReview(x.key).status==='hidden').length+' скрыто';
+ host.textContent='';
+ entries.forEach(x=>{
+  const r=cardReview(x.key),item=document.createElement('div');item.className='review-card is-'+(r.status||'new');
+  const top=document.createElement('div');top.className='review-top';
+  const img=document.createElement('img');img.src=MATVEY_ART[x.img];img.alt='';const title=document.createElement('span');title.textContent=x.word;
+  top.append(img,title);item.append(top);
+  const status=document.createElement('select');status.setAttribute('aria-label','Статус '+x.word);
+  [['new','Без пометки'],['ok','✓ Проверена'],['flagged','⚑ Неправильный звук / рисунок'],['hidden','🙈 Скрыть из живых карточек']].forEach(([value,label])=>{const opt=document.createElement('option');opt.value=value;opt.textContent=label;status.append(opt)});status.value=r.status||'new';
+  status.onchange=()=>{const old=cardReview(x.key);S.reviewCards[x.key]={...old,status:status.value};save();reviewRender()};item.append(status);
+  const voice=document.createElement('input');voice.type='text';voice.placeholder=x.voice?'Своя фраза озвучки':'Примечание: текст озвучки';voice.value=r.voice||'';voice.setAttribute('aria-label','Своя фраза '+x.word);voice.addEventListener('change',()=>{S.reviewCards[x.key]={...cardReview(x.key),voice:voice.value.slice(0,150)};save()});item.append(voice);
+  const note=document.createElement('textarea');note.placeholder='Что исправить? Например: неправильно говорит МУ-МУ';note.value=r.note||'';note.setAttribute('aria-label','Замечание '+x.word);note.addEventListener('change',()=>{S.reviewCards[x.key]={...cardReview(x.key),note:note.value.slice(0,500)};save()});item.append(note);
+  const acts=document.createElement('div');acts.className='review-actions';const test=document.createElement('button');test.type='button';test.textContent='🔊 Проверить';test.onclick=()=>say(voice.value.trim()||x.voice||x.word);
+  const flag=document.createElement('button');flag.type='button';flag.textContent='⚑ Отметить';flag.onclick=()=>{S.reviewCards[x.key]={...cardReview(x.key),status:'flagged',note:note.value.slice(0,500),voice:voice.value.slice(0,150)};save();reviewRender()};acts.append(test,flag);item.append(acts);host.append(item);
+ });
+ if(!entries.length)host.textContent='Карточки по этому фильтру не найдены.';
+}
+$('reviewSearch').addEventListener('input',reviewRender);
+$('reviewFilter').addEventListener('change',reviewRender);
+$('reviewDetails').addEventListener('toggle',()=>{if($('reviewDetails').open)reviewRender()});
+$('reviewExport').onclick=()=>{
+ const json=JSON.stringify({format:'matvey-cards-v1',exportedAt:new Date().toISOString(),reviews:S.reviewCards},null,2);
+ const a=document.createElement('a');const url=URL.createObjectURL(new Blob([json],{type:'application/json'}));a.href=url;a.download='matvey-card-review.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);
+};
+$('reviewImportBtn').onclick=()=>$('reviewImport').click();
+$('reviewImport').onchange=async e=>{
+ const f=e.target.files&&e.target.files[0];if(!f)return;
+ try{if(f.size>150000)throw Error('Слишком большой файл');const data=JSON.parse(await f.text());if(data.format!=='matvey-cards-v1'||!data.reviews||typeof data.reviews!=='object')throw Error('Неверный формат');
+  const allowed=new Set(reviewEntries().map(x=>x.key)),next={};for(const [key,r] of Object.entries(data.reviews)){if(!allowed.has(key)||!r||typeof r!=='object')continue;next[key]={status:['new','ok','flagged','hidden'].includes(r.status)?r.status:'new',voice:String(r.voice||'').slice(0,150),note:String(r.note||'').slice(0,500)}}
+  S.reviewCards={...S.reviewCards,...next};save();reviewRender();alert('Импортировано карточек: '+Object.keys(next).length);
+ }catch(err){alert('Не удалось импортировать: '+err.message)}finally{e.target.value=''}
+};
+window.__matveyReview={get:()=>structuredClone(S.reviewCards),set:(key,data)=>{S.reviewCards[key]={...data};save();reviewRender()}};
 
 /* ---- V6 · маленькие действия в волшебной мастерской ---- */
 const MAGIC={mode:'house',done:new Set(),started:0,finished:false,round:0,timer:null};
@@ -2631,6 +2883,203 @@ $('magicReset').onclick=()=>magicReset(MAGIC.mode);
 $('magicNext').onclick=()=>{if(!MAGIC.finished||$('magicNext').disabled||Date.now()-MAGIC.started<3000)return;const n=['house','garden','tower'];magicReset(n[(n.indexOf(MAGIC.mode)+1)%n.length]);$('magicScene').scrollIntoView({block:'nearest',behavior:'smooth'});};
 document.querySelectorAll('[data-magic-mode]').forEach(b=>bindKidTap(b,()=>magicReset(b.dataset.magicMode)));
 window.__magic={open:magicOpen,state:()=>({mode:MAGIC.mode,done:MAGIC.done.size,finished:MAGIC.finished}),act:id=>{$('magicScene').querySelector('[data-magic-id="'+id+'"]').dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}))}};
+
+/* === V9: Лесная школа. 10 независимых мини-игр с речевыми подсказками. === */
+const D_GAMES=[
+ {id:'size',name:'Большой и маленький',tag:'Сравниваем',icon:'animal-rabbit',description:'Кто больше?'},
+ {id:'shadow',name:'Чья это тень?',tag:'Узнаём силуэт',icon:'animal-fox',description:'Найди зверька'},
+ {id:'pairs',name:'Найди пару',tag:'Внимание',icon:'animal-cow',description:'Два одинаковых'},
+ {id:'habitat',name:'Чей домик?',tag:'Окружающий мир',icon:'animal-duck',description:'Где живёт?'},
+ {id:'odd',name:'Кто лишний?',tag:'Мышление',icon:'animal-mushroom',description:'Что не подходит?'},
+ {id:'count',name:'Собери яблоки',tag:'Счёт от 1 до 3',emoji:'🍎',description:'Посчитай урожай'},
+ {id:'pattern',name:'Продолжи узор',tag:'Последовательности',emoji:'🌼',description:'Что дальше?'},
+ {id:'order',name:'По росту',tag:'Порядок величин',emoji:'🌲',description:'От малого к большому'},
+ {id:'path',name:'Тропинка зайчика',tag:'Движения пальцем',icon:'animal-rabbit',description:'Топ-топ по камням'},
+ {id:'wash',name:'Умой зверёнка',tag:'Забота и самостоятельность',icon:'animal-bear',description:'Сделай чистым!'},
+ {id:'echo',name:'Звуковое эхо',tag:'Слушай · повторяй',icon:'animal-frog',description:'Выбери звук и повтори'},
+ {id:'gesture',name:'Волшебные слова',tag:'ДАЙ · ЕЩЁ · НА',icon:'animal-rabbit',description:'Просим и показываем жесты'}
+];
+const D_R={
+ size:[{art:'rabbit',word:'зайчик',want:'big',prompt:'Где БОЛЬШОЙ зайчик?',success:'Большой зайчик!'},
+       {art:'fox',word:'лисичка',want:'small',prompt:'Где МАЛЕНЬКАЯ лисичка?',success:'Маленькая лисичка!'},
+       {art:'cow',word:'коровка',want:'big',prompt:'Покажи БОЛЬШУЮ коровку!',success:'Большая коровка!'}],
+ shadow:[{art:'cow',options:['rabbit','cow','fox'],prompt:'Чья это тень? Найди коровку!',success:'Это коровка! Му-му!'},
+         {art:'duck',options:['duck','rabbit','bear'],prompt:'Кто спрятался в тени?',success:'Это уточка! Кря-кря!'},
+         {art:'fox',options:['sheep','cow','fox'],prompt:'Посмотри на тень. Кто это?',success:'Это лисичка!'}],
+ pairs:[{animals:['cow','rabbit'],prompt:'Найди две одинаковые картинки!'},
+        {animals:['fox','duck'],prompt:'Найди пару для каждого зверька!'},
+        {animals:['sheep','bear'],prompt:'Соедини одинаковых зверят!'}],
+ habitat:[{art:'cow',prompt:'Где живёт коровка?',answer:'farm',success:'Коровка живёт на ферме!'},
+          {art:'fox',prompt:'Где живёт лисичка?',answer:'forest',success:'Лисичка живёт в лесу!'},
+          {art:'duck',prompt:'Где любит плавать уточка?',answer:'pond',success:'Уточка плавает в пруду!'}],
+ odd:[{things:['🍐','🍎','🍓','🚗'],answer:'🚗',prompt:'Здесь фрукты и ягода. Что лишнее?',success:'Машинка не фрукт!'},
+      {things:['🐻','🐰','🐸','🍄'],answer:'🍄',prompt:'Покажи то, что не животное!',success:'Гриб — не животное!'},
+      {things:['🚙','🚕','🚜','🐣'],answer:'🐣',prompt:'Найди того, кто не машина!',success:'Цыплёнок — не машина!'}],
+ count:[{need:1,prompt:'Положи в корзину ОДНО яблоко!',success:'Одно яблоко!'},
+        {need:2,prompt:'Собери ДВА яблока!',success:'Два яблока!'},
+        {need:3,prompt:'Собери ТРИ яблока!',success:'Три яблока!'}],
+ pattern:[{a:'🍎',b:'🌼',prompt:'Яблоко, цветок, яблоко, цветок. Что дальше?',success:'Яблоко! Правильно!'},
+          {a:'🔵',b:'🟡',prompt:'Синий, жёлтый, синий, жёлтый. Что дальше?',success:'Синий кружочек!'},
+          {a:'🍓',b:'🍄',prompt:'Клубника, гриб, клубника, гриб. Что дальше?',success:'Клубника!'}],
+ order:[{art:'plant-tree',word:'деревья',prompt:'Сначала маленькое, потом среднее, потом большое дерево!'},
+        {art:'animal-rabbit',word:'зайчики',prompt:'Поставь зайчиков по росту: маленький, средний, большой!'},
+        {art:'animal-bear',word:'мишки',prompt:'Расставь мишек от маленького к большому!'}],
+ path:[{friend:'rabbit',goal:'🥕',prompt:'Помоги зайчику дойти до морковки! Нажимай на камушки по порядку.'},
+       {friend:'duck',goal:'🌾',prompt:'Уточка идёт за зёрнышками! Раз, два, три, четыре.'},
+       {friend:'fox',goal:'🍎',prompt:'Проведи лисичку по тропинке к яблоку!'}],
+ wash:[{art:'rabbit',word:'зайчика',prompt:'Зайчик испачкался! Убери пятнышки пальчиком.',success:'Зайчик чистый!'},
+       {art:'cow',word:'коровку',prompt:'Помоги умыть коровку! Нажми на грязные пятнышки.',success:'Коровка чистая! Му-му!'},
+       {art:'bear',word:'мишку',prompt:'Умой мишку! Три, три — будет чисто!',success:'Чистый мишка!'}],
+ echo:[{art:'cow',answer:'МУ-МУ',options:['МУ-МУ','КВА-КВА','КРЯ-КРЯ'],prompt:'Послушай коровку. Найди МУ-МУ и повтори!',success:'Му-му! Это коровка!'},
+       {art:'duck',answer:'КРЯ-КРЯ',options:['БЕ-БЕ','КРЯ-КРЯ','МУ-МУ'],prompt:'Как говорит уточка? Кря-кря! Повтори!',success:'Кря-кря! Так говорит уточка!'},
+       {art:'frog',answer:'КВА-КВА',options:['КО-КО','МУ-МУ','КВА-КВА'],prompt:'Лягушка говорит КВА-КВА. Попробуй повторить!',success:'Ква-ква! Это лягушка!'}],
+ gesture:[{object:'🧸',word:'ДАЙ',options:['ДАЙ','НА','ПОКА'],prompt:'Хочешь мишку? Попроси: ДАЙ! Можно показать ладошкой.',success:'Дай! Молодец!'},
+          {object:'🍎',word:'ЕЩЁ',options:['НЕТ','ЕЩЁ','НА'],prompt:'Хочешь ещё яблоко? Скажи: ЕЩЁ! Или покажи жест.',success:'Ещё! Ура!'},
+          {object:'🟡',word:'НА',options:['ПОКА','ДАЙ','НА'],prompt:'Передай мяч взрослому и скажи: НА!',success:'На! Спасибо!'}]
+};
+const D_HOMES=[{id:'farm',emoji:'🏡',name:'Ферма'},{id:'forest',emoji:'🌲',name:'Лес'},{id:'pond',emoji:'🏞️',name:'Пруд'}];
+const D={mode:null,round:0,data:null,started:0,solved:false,finished:false,stamp:0,selected:null,matched:new Set(),deck:[],count:0,sequence:0,cleared:new Set(),timer:null,errors:0};
+const dGame=id=>D_GAMES.find(x=>x.id===id);
+const dArt=id=>MATVEY_ART[id]||MATVEY_ART['animal-'+id];
+const dPicture=id=>'<img src="'+dArt(id)+'" alt="" draggable="false">';
+function dTile(id,label='',cls=''){
+ const pic=String(id).startsWith('emoji:')?'<span class="disc-emoji">'+id.slice(6)+'</span>':dPicture(id);
+ return '<span class="disc-picture">'+pic+'</span>'+(label?'<strong>'+label+'</strong>':'');
+}
+function dButton(id,label='',cls='',data=''){
+ return '<button type="button" class="disc-tile '+cls+'" data-d-choice="'+data+'" aria-label="'+(label||data)+'">'+dTile(id,label)+'</button>';
+}
+function dStatus(text,good=false){const n=$('discStatus');n.textContent=text;n.classList.toggle('good',good);}
+function dPlayPhrase(text){if(S.voiceOn)say(text)}
+function dAnimateError(btn){if(btn){btn.classList.remove('wrong');void btn.offsetWidth;btn.classList.add('wrong');}D.errors++;dStatus('Попробуй ещё — у тебя получится! 🐾');}
+function dRenderMenu(){
+ $('discGrid').innerHTML=D_GAMES.map((g,i)=>'<button class="disc-entry" data-d-game="'+g.id+'" aria-label="Открыть игру '+g.name+'"><span class="disc-index">'+(i+1)+'/'+D_GAMES.length+'</span>'+(Array.isArray(S.discoveryDone)&&S.discoveryDone.includes(g.id)?'<span class="disc-mark">✓</span>':'')+'<div class="disc-picture">'+(g.icon?dPicture(g.icon):'<span>'+g.emoji+'</span>')+'</div><strong>'+g.name+'</strong><small>'+g.tag+'</small></button>').join('');
+ $('discGrid').querySelectorAll('[data-d-game]').forEach(b=>bindKidTap(b,()=>dStart(b.dataset.dGame)));
+}
+function dCatalog(){clearTimeout(D.timer);D.stamp++;D.mode=null;D.finished=false;stopSpeak();show('discoveryScr');$('discCatalog').hidden=false;$('discPlay').hidden=true;$('discStars').textContent=S.stars;$('discBearMenu').src=dArt('bear-hero');dRenderMenu();$('discScroll').scrollTop=0;}
+function dStart(mode){
+ if(!D_R[mode])return;clearTimeout(D.timer);D.mode=mode;D.round=0;D.finished=false;show('discoveryScr');$('discCatalog').hidden=true;$('discPlay').hidden=false;$('discBearPlay').src=dArt('bear-hero');dRound();$('discScroll').scrollTop=0;
+}
+function dRound(){
+ clearTimeout(D.timer);stopSpeak();D.stamp++;D.started=Date.now();D.solved=false;D.data=D_R[D.mode][D.round];D.selected=null;D.matched=new Set();D.deck=[];D.count=0;D.sequence=0;D.cleared=new Set();D.errors=0;
+ const g=dGame(D.mode),r=D.data;$('discGameName').textContent=g.name;$('discPrompt').textContent=r.prompt;
+ $('discSteps').innerHTML=[0,1,2].map(i=>'<i class="'+(i<D.round?'done':i===D.round?'on':'')+'"></i>').join('');
+ $('discStars').textContent=S.stars;$('discNext').hidden=true;$('discNext').disabled=true;$('discNext').textContent='Дальше ➜';
+ $('discScene').innerHTML='';$('discChoices').innerHTML='';dStatus('Послушай и попробуй!');
+ dRender();dPlayPhrase(r.prompt);
+}
+function dSuccess(speech){
+ if(D.solved)return;D.solved=true;const stamp=D.stamp;
+ S.stars++;S.discoveryWins=(S.discoveryWins||0)+1;save();$('discStars').textContent=S.stars;
+ try{tone([[730,.11,.2],[980,.13,.16],[1200,.16,.12]])}catch(e){};
+ burst();dStatus('⭐ Отлично! '+speech,true);
+ $('discScene').insertAdjacentHTML('beforeend','<div class="disc-success"><div class="disc-wow">🌟 🐾 🌟</div><h3>Молодец!</h3><p>'+speech+'</p></div>');
+ dPlayPhrase('Молодец! '+speech);
+ const b=$('discNext');b.hidden=false;b.disabled=true;b.textContent=D.round===2?'Завершить игру ✓':'Дальше ➜';
+ D.timer=setTimeout(()=>{if(D.stamp===stamp&&D.solved)b.disabled=false;},Math.max(0,3000-(Date.now()-D.started)));
+}
+function dFinish(){
+ D.finished=true;const list=Array.isArray(S.discoveryDone)?S.discoveryDone:[];
+ if(!list.includes(D.mode)){list.push(D.mode);S.discoveryDone=list;save()}
+ $('discSteps').innerHTML=[0,1,2].map(()=>'<i class="done"></i>').join('');
+ $('discPrompt').textContent='Ура! Все три задания выполнены!';
+ $('discScene').innerHTML='<div class="disc-success" style="position:relative;min-height:270px;width:100%;border-radius:22px"><div class="disc-wow">🏆 ⭐ 🐻</div><h3>Игра пройдена!</h3><p>Матвей, ты молодец!</p></div>';
+ $('discChoices').innerHTML='';dStatus('Поиграем ещё или выберем другую игру?',true);
+ const b=$('discNext');b.hidden=false;b.disabled=false;b.textContent='Сыграть ещё ↻';
+ dPlayPhrase('Отлично! Ты справился! Давай поиграем ещё!');
+}
+function dBindChoices(onChoice){const run=b=>{if(D.solved||D.finished)return;onChoice(b.dataset.dChoice,b)};
+ $('discScene').querySelectorAll('[data-d-choice]').forEach(b=>bindKidTap(b,()=>run(b)));
+ $('discChoices').querySelectorAll('[data-d-choice]').forEach(b=>bindKidTap(b,()=>run(b)));}
+function dRender(){
+ const s=$('discScene'),c=$('discChoices'),r=D.data;
+ if(D.mode==='echo'){
+  s.innerHTML='<div class="disc-label">Послушай, повтори и выбери звук!</div><div class="disc-feature-art">'+dPicture(r.art)+'</div><div class="disc-action-callout">🐾 Как говорит этот зверёк?</div>';
+  c.innerHTML=r.options.map((x,i)=>'<button type="button" class="disc-sound-choice" data-d-choice="'+i+'" aria-label="'+x+'">'+x+'</button>').join('');
+  dBindChoices((v,b)=>{if(r.options[+v]===r.answer){b.classList.add('matched');dSuccess(r.success)}else{dAnimateError(b);dPlayPhrase('Послушай ещё раз!')}});
+ }else if(D.mode==='gesture'){
+  s.innerHTML='<div class="disc-label">Настоящие слова в настоящей игре</div><div class="disc-gesture-scene"><div class="disc-gesture-object">'+r.object+'</div><div class="disc-gesture-speech">Скажи или покажи жест 👋</div></div><div class="disc-action-callout">Попроси взрослого поиграть вместе!</div>';
+  c.innerHTML=r.options.map((x,i)=>'<button type="button" class="disc-sound-choice" data-d-choice="'+i+'" aria-label="'+x+'">'+x+'</button>').join('');
+  dBindChoices((v,b)=>{if(r.options[+v]===r.word)dSuccess(r.success);else dAnimateError(b)});
+ }else if(D.mode==='size'){
+  s.innerHTML='<div class="disc-label">Найди '+(r.want==='big'?'БОЛЬШОГО':'МАЛЕНЬКОГО')+' зверька</div><div class="disc-row">'+dButton(r.art,'Большой','big','big')+dButton(r.art,'Маленький','small','small')+'</div>';
+  dBindChoices((v,b)=>v===r.want?dSuccess(r.success):dAnimateError(b));
+ }else if(D.mode==='shadow'){
+  s.innerHTML='<div class="disc-label">Кто спрятался?</div><div class="disc-shadow">'+dPicture(r.art)+'</div>';
+  c.innerHTML=r.options.map(a=>dButton(a,{'cow':'Коровка','fox':'Лиса','rabbit':'Зайчик','duck':'Уточка','bear':'Мишка','sheep':'Овечка'}[a]||'Зверёк','',''+a)).join('');
+  dBindChoices((v,b)=>v===r.art?dSuccess(r.success):dAnimateError(b));
+ }else if(D.mode==='pairs'){
+  D.deck=shuffle(r.animals.flatMap(a=>[a,a])).map((a,i)=>({art:a,index:i}));dPairs();
+ }else if(D.mode==='habitat'){
+  s.innerHTML='<div class="disc-label">Найди подходящее место</div><div class="disc-feature-animal">'+dPicture(r.art)+'</div>';
+  c.innerHTML=D_HOMES.map(x=>dButton('emoji:'+x.emoji,x.name,'disc-emoji-card',x.id)).join('');
+  dBindChoices((v,b)=>v===r.answer?dSuccess(r.success):dAnimateError(b));
+ }else if(D.mode==='odd'){
+  s.innerHTML='<div class="disc-label">Один предмет не подходит</div><div class="disc-row">'+r.things.map((a,i)=>dButton('emoji:'+a,'','disc-emoji-card',String(i))).join('')+'</div>';
+  dBindChoices((v,b)=>r.things[+v]===r.answer?dSuccess(r.success):dAnimateError(b));
+ }else if(D.mode==='count'){
+  s.innerHTML='<div class="disc-label">Собери '+r.need+' '+(r.need===1?'яблоко':r.need===2?'яблока':'яблока')+'</div><div class="disc-counter">🧺 <span id="discAppleCount">0</span> / '+r.need+'</div><div class="disc-apple-grid">'+[0,1,2,3,4].map(i=>'<button class="disc-apple" data-d-choice="'+i+'" aria-label="Положить яблоко в корзинку">🍎</button>').join('')+'</div>';
+  dBindChoices((v,b)=>{if(b.classList.contains('used'))return;b.classList.add('used');D.count++;$('discAppleCount').textContent=D.count;dStatus('Считаем: '+D.count+'!');if(D.count===r.need)dSuccess(r.success)});
+ }else if(D.mode==='pattern'){
+  s.innerHTML='<div class="disc-label">Что будет следующим?</div><div class="disc-pattern"><span>'+r.a+'</span><span>'+r.b+'</span><span>'+r.a+'</span><span>'+r.b+'</span><span>❓</span></div>';
+  const options=shuffle([r.a,r.b,r.a==='🍓'?'🌳':'🍓']);
+  c.innerHTML=options.map((e,i)=>dButton('emoji:'+e,'','disc-emoji-card',String(i))).join('');
+  dBindChoices((v,b)=>options[+v]===r.a?dSuccess(r.success):dAnimateError(b));
+ }else if(D.mode==='order'){
+  D.deck=shuffle([0,1,2]);dOrder();
+ }else if(D.mode==='path'){
+  dPath();
+ }else if(D.mode==='wash'){
+  dWash();
+ }
+}
+function dPairs(){
+ const s=$('discScene');s.innerHTML='<div class="disc-label">Найди одинаковых зверят</div><div class="disc-row">'+D.deck.map((x,i)=>'<button type="button" class="disc-tile '+(D.matched.has(i)?'matched':D.selected===i?'chosen':'')+'" data-d-choice="'+i+'" aria-label="Выбрать зверька">'+dTile(x.art)+'</button>').join('')+'</div>';
+ dBindChoices((v,b)=>{
+  const i=Number(v);if(D.matched.has(i))return;
+  if(D.selected===null){D.selected=i;dStatus('Найди такого же!');dPairs();return}
+  if(D.selected===i){D.selected=null;dPairs();return}
+  if(D.deck[D.selected].art===D.deck[i].art){D.matched.add(D.selected);D.matched.add(i);D.selected=null;dStatus('Пара найдена! ✨',true);dPairs();if(D.matched.size===D.deck.length)dSuccess('Все пары найдены!');}
+  else{D.selected=null;dAnimateError(b);dPairs()}
+ });
+}
+function dOrder(){
+ const r=D.data,s=$('discScene');const ratios=[.54,.74,1];
+ const pic=(scale)=>'<img style="height:'+Math.round(scale*90)+'px;width:100%;object-fit:contain" src="'+dArt(r.art)+'" alt="">';
+ s.innerHTML='<div class="disc-label">Маленький → средний → большой</div><div class="disc-shelf">'+[0,1,2].map(i=>'<div class="disc-placed">'+(i<D.sequence?pic(ratios[i]):'<span style="font-size:32px;opacity:.45">'+(i+1)+'</span>')+'</div>').join('')+'</div><div class="disc-row">'+D.deck.filter(x=>x>=D.sequence).map(i=>'<button class="disc-tile" data-d-choice="'+i+'" aria-label="'+['Маленький','Средний','Большой'][i]+'">'+pic(ratios[i])+'<strong>'+['Маленький','Средний','Большой'][i]+'</strong></button>').join('')+'</div>';
+ dBindChoices((v,b)=>{if(+v!==D.sequence){dAnimateError(b);return;}D.sequence++;dStatus(['Маленький!','Средний!','Большой!'][D.sequence-1],true);dPlayPhrase(['Маленький!','Средний!','Большой!'][D.sequence-1]);if(D.sequence===3)dSuccess('От маленького к большому!');else dOrder();});
+}
+function dPath(){
+ const r=D.data,s=$('discScene');const places=[[15,48],[38,64],[62,43],[85,61]];
+ s.innerHTML='<div class="disc-label">Топ-топ! Идём по камушкам</div><div class="disc-path">'+places.map((p,i)=>'<button class="disc-stone '+(i<D.sequence?'passed':'')+'" style="left:'+p[0]+'%;top:'+p[1]+'%" data-d-choice="'+i+'" aria-label="Камушек номер '+(i+1)+'">'+(i<D.sequence?'✓':i+1)+'</button>').join('')+'<img class="disc-character" id="discWalker" src="'+dArt(r.friend)+'" alt=""><div class="disc-finish">'+r.goal+'</div></div>';
+ const walker=$('discWalker');walker.style.left=(D.sequence?Math.min(80,D.sequence*20):1)+'%';
+ dBindChoices((v,b)=>{if(+v!==D.sequence){dAnimateError(b);return;}D.sequence++;dStatus('Топ-топ! '+D.sequence+'!',true);if(D.sequence===4)dSuccess('Дошли до цели! Ура!');else dPath();});
+}
+function dWash(){
+ const r=D.data,s=$('discScene');const spots=[[10,20],[61,13],[34,61],[75,55]];
+ s.innerHTML='<div class="disc-label">Три, три! Чисто-чисто!</div><div class="disc-wash" id="discWashSurface">'+dPicture(r.art)+spots.map((p,i)=>'<button type="button" class="disc-mud '+(D.cleared.has(i)?'gone':'')+'" style="left:'+p[0]+'%;top:'+p[1]+'%" data-d-choice="'+i+'" aria-label="Убрать пятнышко">🫧</button>').join('')+'</div>';
+ const wash=i=>{
+  if(D.solved||D.cleared.has(i))return;D.cleared.add(i);
+  const b=s.querySelector('[data-d-choice="'+i+'"]');if(b)b.classList.add('gone');
+  dStatus('Чисто! Убрали '+D.cleared.size+' из '+spots.length+' пятнышек.',true);
+  if(D.cleared.size===spots.length)dSuccess(r.success);
+ };
+ dBindChoices(v=>wash(Number(v)));
+ const area=$('discWashSurface');area.style.touchAction='none';
+ let isWiping=false;
+ area.addEventListener('pointerdown',e=>{isWiping=true;if(e.pointerType!=='mouse'||e.button===0){e.preventDefault();}}, {passive:false});
+ area.addEventListener('pointermove',e=>{if(!isWiping)return;e.preventDefault();const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-d-choice]');if(target&&area.contains(target))wash(Number(target.dataset.dChoice));},{passive:false});
+ const done=()=>isWiping=false;area.addEventListener('pointerup',done);area.addEventListener('pointercancel',done);area.addEventListener('lostpointercapture',done);
+}
+function dNext(){if(!D.solved&&!D.finished)return;if(D.finished){dStart(D.mode);return}if(Date.now()-D.started<3000||$('discNext').disabled)return;if(D.round<2){D.round++;dRound();$('discScroll').scrollTop=0}else dFinish();}
+$('discHome').onclick=()=>{clearTimeout(D.timer);D.stamp++;stopSpeak();renderHome()};
+$('discBack').onclick=dCatalog;
+$('discReplay').onclick=()=>D.mode&&dPlayPhrase(D.finished?'Молодец, Матвей!':D.data.prompt);
+$('discRestart').onclick=()=>D.mode&&dStart(D.mode);
+$('discNext').onclick=dNext;
+$('discoveryBtn').onclick=dCatalog;
+$('discMoreBtn').onclick=dCatalog;
+window.__discovery={menu:dCatalog,start:dStart,next:dNext,state:()=>({mode:D.mode,round:D.round,solved:D.solved,finished:D.finished,started:D.started,matched:D.matched.size,count:D.count,sequence:D.sequence,cleared:D.cleared.size,errors:D.errors}),choose:value=>{const b=$('discScene').querySelector('[data-d-choice="'+value+'"]')||$('discChoices').querySelector('[data-d-choice="'+value+'"]');if(!b)throw Error('no choice '+value);b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch'}))},catalog:dCatalog};
 
 $('adventureBtn').onclick=()=>{tone([[730,.1,.15]]);storyEnter(0);};
 $('adventureHome').onclick=()=>{storyStop();stopSpeak();renderHome();};

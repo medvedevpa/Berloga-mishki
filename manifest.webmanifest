@@ -1,0 +1,25 @@
+{
+  "name": "Играем и говорим — Мишка Матвей",
+  "short_name": "Мишка Матвей",
+  "description": "Речевые игры, карточки и 12 лесных мини-игр с мишкой Матвеем.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#d9f6ff",
+  "theme_color": "#6fc85a",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
