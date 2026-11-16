@@ -1,5 +1,5 @@
-import {WORLD_GAMES} from './world-games-data.js?v=15';
-import {ParcelWorld,GardenWorld} from './world-games-scene.js?v=15';
+import {WORLD_GAMES} from './world-games-data.js?v=16';
+import {ParcelWorld,GardenWorld} from './world-games-scene.js?v=16';
 const $=id=>document.getElementById(id);
 let world=null,active=false,kind='parcels',round=0,step=0,solved=false,selected=null,count=0,started=0,level=1,timer=0,epoch=0,abort=null;
 const bridge=()=>window.MatveyGameBridge;

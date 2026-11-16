@@ -1,6 +1,6 @@
-import * as T from './vendor/three.min.js?v=15';
-import {PicnicScene} from './picnic-scene.js?v=15';
-import {WORLD_GAMES} from './world-games-data.js?v=15';
+import * as T from './vendor/three.min.js?v=16';
+import {PicnicScene} from './picnic-scene.js?v=16';
+import {WORLD_GAMES} from './world-games-data.js?v=16';
 // Share renderer, primitive modelling, picking, observers and disposal with the cafe.
 class PlayWorld extends PicnicScene{
  build(){

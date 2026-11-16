@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Играем и говорим — Мишка Матвей</title>
 <meta name="theme-color" content="#79c85d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Мишка Матвей"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><link rel="icon" type="image/png" href="./icon-192.png">
-<link rel="stylesheet" href="css/stylesheet-v15-04a88086b5.css">
+<link rel="stylesheet" href="css/stylesheet-v16-9fdf0ce6df.css">
 </head>
 <body>
 
@@ -272,24 +272,47 @@
   </div>
 </section>
 
-<!-- ЗАПИСЬ ГОЛОСА МАМЫ -->
+<!-- ЛОКАЛЬНАЯ СТУДИЯ ГОЛОСА РОДИТЕЛЯ -->
 <section id="recScr" class="screen" hidden>
   <div class="top">
     <button class="icon-btn" id="recHome" aria-label="Назад">←</button>
-    <div style="flex:1;text-align:center;font-weight:800;font-size:20px">Ваш голос <span id="recCount"></span></div>
+    <div class="voice-title">Ваш голос в игре <span id="recCount"></span></div>
   </div>
-  <div class="center">
-    <div class="rec-big" id="recEmoji">🎙️</div>
-    <div class="rec-word" id="recWord"></div>
-    <div class="sub" id="recMsg">Скажите слово ласково и чётко (1–2 секунды)</div>
-     <label class="rec-enhance"><input type="checkbox" id="recEnhance" checked> Улучшать запись: подавление шума и выравнивание громкости</label>
-    <div class="actions">
-      <button class="btn ghost" id="recPrev">◀</button>
-      <button class="rec-btn" id="recBtn" aria-label="Запись">●</button>
-      <button class="btn ghost" id="recPlay">▶</button>
-      <button class="btn ghost" id="recNext">▶▶</button>
+  <div class="voice-scroll">
+    <div class="voice-intro">
+      <p>Запишите частые реплики один раз — они прозвучат вашим голосом во всех играх. Незаписанные фразы читает устройство.</p>
+      <details class="voice-about"><summary>Как используются записи</summary><p>Игра подставляет совпавшие целые фразы, в том числе внутри длинного задания. Новые слова из образцов голоса не создаются. Запись и обработка происходят только на вашем устройстве.</p></details>
+      <div class="voice-fields">
+        <label>Набор фраз<select id="recGroup"></select></label>
+        <label>Поиск в наборе<input id="recSearch" type="search" placeholder="Например: дай" maxlength="100"></label>
+      </div>
+      <progress id="recProgress" value="0" max="24" aria-label="Записано в наборе"></progress>
+      <small id="recSummary"></small>
+      <select id="recPhrase" aria-label="Выбрать фразу"></select>
     </div>
-    <button class="btn ghost" id="recDel">🗑 удалить эту запись</button>
+    <div class="voice-card">
+      <div class="rec-big" id="recEmoji">🎙️</div>
+      <div class="rec-word" id="recWord"></div>
+      <div id="recMsg" role="status" aria-live="polite"></div>
+      <div class="voice-meter"><meter id="recMeter" min="0" max="1" value="0" aria-label="Уровень микрофона"></meter><span id="recLevelText">Микрофон выключен</span></div>
+      <button class="rec-btn" id="recBtn" aria-label="Записать фразу">● Записать</button>
+      <div class="voice-controls">
+        <button class="btn ghost" id="recPrev" aria-label="Предыдущая фраза">←</button>
+        <button class="btn ghost" id="recPlay">▶ Послушать</button>
+        <button class="btn ghost" id="recNext" aria-label="Следующая фраза">→</button>
+      </div>
+      <button class="btn ghost" id="recSkip">К следующей без записи</button>
+      <label class="rec-enhance"><input type="checkbox" id="recEnhance" checked> Подавлять шум, убирать паузы по краям и выравнивать громкость</label>
+      <label class="voice-gain">Усиление при сохранении: <span id="recGainValue">1.0×</span><input id="recGain" type="range" min="0.6" max="1.8" step="0.1" value="1"></label>
+      <div class="voice-controls"><button class="btn ghost" id="recOriginal" disabled>▶ До обработки</button><button class="btn ghost" id="recDel">Удалить эту запись</button></div>
+      <details class="voice-custom"><summary>Добавить свою фразу</summary><div class="voice-fields"><label>Текст для записи<input id="recCustomText" type="text" maxlength="240" placeholder="Например: Матвей, давай поиграем!"></label></div><button class="btn ghost" id="recAdd">Добавить фразу</button></details>
+    </div>
+    <div class="voice-backup">
+      <p>Чтобы сохранить голос при смене телефона, скачайте копию и загрузите её на другом устройстве. Загрузка добавляет отсутствующие записи, сохраняя существующие.</p>
+      <div class="voice-controls"><button class="btn ghost" id="recExport">↓ Сохранить копию голоса</button><button class="btn ghost" id="recImportBtn">↑ Загрузить копию</button></div>
+      <input id="recImport" type="file" accept="application/json,.json" hidden>
+      <small>Записывайте в тихой комнате примерно в 15–20 см от микрофона, без музыки. Обработка базовая; прослушайте результат. Очистка данных браузера удаляет записи. Передачи аудио на сервер нет.</small>
+    </div>
   </div>
 </section>
 
@@ -365,8 +388,8 @@
         <label><small>Скорость речи: <span id="rateVal"></span></small><input type="range" id="rate" min="0.6" max="1" step="0.05"></label>
         <button class="btn ghost" id="voiceTest">▶ Послушать голос</button>
         <small id="voiceHint"></small>
-        <button class="btn blue" id="recOpen" style="font-size:18px;padding:12px 18px">🎙 Записать свой голос (лучший вариант)</button>
-        <small>Записанные вами слова игра произносит вашим голосом вместо голоса устройства. Записи хранятся только на этом устройстве.</small>
+        <button class="btn blue" id="recOpen" style="font-size:18px;padding:12px 18px">🎙 Ваш голос в игре</button>
+        <small>Запишите частые реплики или фразы из 3D-игр. Они автоматически заменят голос устройства при совпадении текста. Все аудио остаются на устройстве; можно скачать копию.</small>
       </div>
     </details>
 
@@ -461,6 +484,6 @@
  <div id="familyContent"></div>
  <p id="familyMessage" role="status" aria-live="polite"></p>
 </dialog>
-<script type="module" src="js/release/v15/app-7C6S2F75.js"></script>
+<script type="module" src="js/release/v16/app-N76U7TPY.js"></script>
 </body>
 </html>

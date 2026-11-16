@@ -1,0 +1,27 @@
+/* Parent recording studio; kept separate from the child game screens. */
+#recScr{background:linear-gradient(145deg,#fff5dfed,#e8effff0);color:#3f255a}
+.voice-title{flex:1;text-align:center;font-size:clamp(19px,4vw,26px);font-weight:900}
+#recCount{display:block;font-size:14px;font-weight:700;color:#745c89}
+.voice-scroll{overflow:auto;min-height:0;flex:1;padding:3px 2px 20px;scrollbar-gutter:stable}
+.voice-intro,.voice-card,.voice-backup{width:min(100%,700px);margin:0 auto 14px;padding:18px;border:2px solid #fff8;border-radius:24px;background:#fffdf4;box-shadow:0 5px 14px #573b6512}
+.voice-intro p,.voice-backup p{margin:0 0 12px;font-size:15px;line-height:1.5}
+.voice-about{margin-bottom:14px;font-size:14px}.voice-about summary{cursor:pointer;font-weight:800}.voice-about p{margin-top:10px}
+.voice-fields{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.voice-fields label{flex:1 1 220px;min-width:0;font-size:14px;font-weight:800;display:grid;gap:5px}
+#recScr select,#recScr input[type=search],#recCustomText{width:100%;min-width:0;border:2px solid #dfd3eb;border-radius:12px;padding:11px;background:#fff;color:#3f255a;font:inherit;font-size:16px}
+#recPhrase{margin-top:12px;text-overflow:ellipsis}
+#recProgress{width:100%;height:12px;accent-color:#8851ce}
+#recSummary{display:block;margin-top:5px;font-size:13px;line-height:1.4}
+.voice-card{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+#recEmoji{font-size:52px;width:64px;height:64px}#recEmoji img{max-width:100%;max-height:100%;object-fit:contain}
+#recWord{font-size:clamp(23px,5.5vw,37px);line-height:1.25;overflow-wrap:anywhere}
+#recMsg{font-size:15px;min-height:42px;line-height:1.45;max-width:580px;color:#625073}
+.voice-meter{width:min(100%,400px);display:grid;gap:5px}.voice-meter meter{width:100%;height:20px;accent-color:#69b93b}#recLevelText{font-size:13px;color:#745c89}
+#recBtn{width:auto;min-width:170px;height:64px;padding:12px 22px;border-radius:22px;font-size:20px;font-weight:900}
+.voice-controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.voice-controls .btn{min-height:46px;font-size:15px;padding:10px 15px}
+#recScr button:disabled{opacity:.45;cursor:default}
+.rec-enhance{display:flex;align-items:flex-start;gap:8px;max-width:510px;text-align:left;font-size:14px;line-height:1.45}.rec-enhance input{width:20px;height:20px;flex:none;accent-color:#8851ce}
+.voice-gain{font-size:14px;width:min(100%,400px)}.voice-gain input{display:block;width:100%;margin-top:8px;accent-color:#8851ce}
+.voice-custom{width:100%;text-align:left;border-top:1px solid #eadff0;padding-top:14px}.voice-custom summary{font-size:15px;font-weight:800;cursor:pointer}.voice-custom .voice-fields{margin-top:12px}.voice-custom .btn{font-size:15px}
+.voice-backup .voice-controls{justify-content:flex-start}.voice-backup small{display:block;margin-top:10px;line-height:1.5;color:#745c89}
+@media(max-width:400px){.voice-intro,.voice-card,.voice-backup{padding:13px;border-radius:20px}.voice-controls{gap:7px}.voice-controls .btn{padding:9px 12px}#recScr .top{gap:8px}}

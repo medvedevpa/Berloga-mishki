@@ -1,4 +1,4 @@
-import {GLTFLoader} from './vendor/gltf-loader.min.js?v=15';
+import {GLTFLoader} from './vendor/gltf-loader.min.js?v=16';
 const path=name=>new URL('assets/models/'+name,document.baseURI).href;
 function disposeTree(root){const geo=new Set(),mats=new Set(),tex=new Set();root.traverse(o=>{if(o.geometry)geo.add(o.geometry);for(const m of(Array.isArray(o.material)?o.material:[o.material]))if(m){mats.add(m);for(const v of Object.values(m))if(v?.isTexture)tex.add(v);}});geo.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());tex.forEach(t=>t.dispose());}
 function decorate(root,id,art){root.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=!String(o.material?.name).startsWith('Roof');o.userData.pick=id;if(art){const name=String(o.material?.name);const type=/fur|muzzle/.test(name)?'fur':/linen/.test(name)?'cloth':/timber/.test(name)?'wood':null;if(type){o.material.map=art.texture(type);o.material.bumpMap=o.material.map;o.material.bumpScale=type==='fur'?.012:.007;o.material.needsUpdate=true;}}}});}

@@ -1,3 +1,7 @@
+import {createLocalVoice} from './local-voice.js';
+import {createVoiceStudio} from './voice-studio.js';
+import {buildVoiceCatalogue} from './voice-data.js';
+
 
 (function(){
 'use strict';
@@ -108,7 +112,8 @@ const sndEnd=()=>tone([[523,.15],[659,.15],[784,.15],[1047,.4]]);
 const sndTap=()=>tone([[520+Math.random()*300,.12,.15]]);
 
 /* ======================= ГОЛОС ======================= */
-const V={voice:null,clips:{}};
+const V={voice:null};
+let voiceStudio=null;
 function ruVoices(){try{return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang));}catch(e){return[];}}
 function scoreVoice(v){
   const n=(v.name+' '+v.voiceURI).toLowerCase();let s=0;
@@ -127,83 +132,10 @@ function pickVoice(){
 try{speechSynthesis.onvoiceschanged=()=>{pickVoice();fillVoiceList();};}catch(e){}
 pickVoice();
 
-let curAudio=null,speakTok=0;
-function stopSpeak(){
-  speakTok++;
-  try{speechSynthesis.cancel();}catch(e){}
-  if(curAudio){try{curAudio.pause();}catch(e){}curAudio=null;}
-  stopTalk();
-}
-function estMs(text,rate){return Math.max(800,spoken(text).replace(/ /g,'').length*130/((rate||S.rate||.8)/.8));}
-function say(text){
-  return new Promise(res=>{
-    stopSpeak();
-    const tok=speakTok;
-    const done=()=>{if(tok===speakTok){stopTalk();}res();};
-    const key=spoken(text);
-    const est=estMs(text);
-    const guard=()=>setTimeout(()=>{if(tok===speakTok)done();else res();},(est+3500)*FAST());
-    if(!S.voiceOn||window.__fast){talk(text,est);setTimeout(done,est*FAST());return;}
-    const clip=V.clips[key];
-    if(clip){
-      const a=new Audio(clip);curAudio=a;
-      let started=false;
-      a.onloadedmetadata=()=>{if(isFinite(a.duration))talk(text,a.duration*1000);started=true;};
-      a.onended=done;a.onerror=done;
-      a.play().then(()=>{if(!started)talk(text,est);}).catch(()=>{talk(text,est);setTimeout(done,est);});
-      guard();return;
-    }
-    if(!('speechSynthesis' in window)){talk(text,est);setTimeout(done,est);return;}
-    try{
-      const u=new SpeechSynthesisUtterance(text.replace(/<[^>]+>/g,'').replace(/-/g,' '));
-      u.lang='ru-RU';u.rate=S.rate||.8;u.pitch=1.2;
-      if(V.voice)u.voice=V.voice;
-      u.onstart=()=>talk(text,est);
-      u.onend=done;u.onerror=done;
-      speechSynthesis.speak(u);
-      guard();
-    }catch(e){talk(text,est);setTimeout(done,est);}
-  });
-}
-
-/* ---- записанный голос мамы (IndexedDB) ---- */
-function idb(){return new Promise((res,rej)=>{
-  if(!window.indexedDB)return rej();
-  const r=indexedDB.open('speechplay-voice',1);
-  r.onupgradeneeded=()=>r.result.createObjectStore('clips');
-  r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);
-});}
-async function loadClips(){
-  try{
-    const db=await idb();
-    await new Promise(res=>{
-      const req=db.transaction('clips').objectStore('clips').openCursor();
-      req.onsuccess=()=>{const c=req.result;if(c){V.clips[c.key]=URL.createObjectURL(c.value);c.continue();}else res();};
-      req.onerror=()=>res();
-    });
-  }catch(e){}
-}
-async function putClip(k,blob){
-  const db=await idb();
-  await new Promise((res,rej)=>{const tx=db.transaction('clips','readwrite');tx.objectStore('clips').put(blob,k);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});
-  if(V.clips[k])URL.revokeObjectURL(V.clips[k]);
-  V.clips[k]=URL.createObjectURL(blob);
-}
-async function delClip(k){
-  try{const db=await idb();await new Promise(res=>{const tx=db.transaction('clips','readwrite');tx.objectStore('clips').delete(k);tx.oncomplete=res;tx.onerror=res;});}catch(e){}
-  if(V.clips[k]){URL.revokeObjectURL(V.clips[k]);delete V.clips[k];}
-}
-function phraseList(){
-  const m=new Map();
-  const add=(w,e)=>{const k=spoken(w);if(k&&!m.has(k))m.set(k,{k,w:w.replace(/<[^>]+>/g,''),e});};
-  PRAISE.forEach(p=>add(p,'🌟'));
-  add('Я тебя услышала!','👂');add('Всё! Пока-пока!','👋');add('Молодец! Давай дальше!','🌟');add('Давай дальше!','➡️');
-  KNOWN.forEach(x=>add(x.w,x.e));SND.forEach(x=>add(x.w,x.e));CORE.forEach(x=>add(x.w,x.e));
-  MOUTH.forEach(x=>add(x.w,x.e));TAPS.forEach(x=>add(x.w,x.e));
-  ACTS.forEach(a=>{add(a.w,a.a);add(a.r,a.b);});
-  FILLS.forEach(f=>add(f.w,f.e));
-  return [...m.values()];
-}
+const localVoice=createLocalVoice({settings:()=>S,voice:()=>V.voice,talk,stopTalk,fast:FAST});
+const say=(text,options)=>localVoice.say(text,options);
+const stopSpeak=()=>localVoice.stop();
+const phraseList=()=>buildVoiceCatalogue(localVoice);
 
 /* ---- микрофон: «ребёнок издал звук» ---- */
 let micStream=null,micAn=null,micBuf=null;
@@ -346,7 +278,7 @@ function buildLesson(){
 /* ======================= СОСТОЯНИЕ ЭКРАНОВ ======================= */
 let L=null,waitTm=null,sessionStart=Date.now(),bubTm=null,childMode=false,wakeLock=null,breakShown=false;
 const SCREENS=['home','lesson','end','roomScr','bubScr','recScr','adventureScr','montessoriScr','discoveryScr','liveScr','magicScr','picnicScr','worldScr'];
-function show(id){SCREENS.forEach(s=>$(s).hidden=(s!==id));}
+function show(id){if(id!=='recScr')voiceStudio?.close();SCREENS.forEach(s=>$(s).hidden=(s!==id));}
 const alive=tok=>!!L&&L.tok===tok&&childMode&&!breakShown;
 function overLimit(){return !!S.sessionMin&&(Date.now()-sessionStart)>=S.sessionMin*60000*FAST()*(window.__fast?50:1);}
 
@@ -407,7 +339,7 @@ function showTask(){
   const tok=L.tok,t=L.tasks[L.i];
   updateDots();
   $('promptTxt').innerHTML=t.prompt;
-  $('sayBtn').hidden=!('speechSynthesis' in window)&&!Object.keys(V.clips).length;
+  $('sayBtn').hidden=!window.speechSynthesis&&!localVoice.keys().length;
   const st=$('stage');st.innerHTML='';
   if(t.kind==='imitate')renderImitate(t,st);
   else if(t.kind==='request'||t.kind==='scene')renderRequest(t,st);
@@ -766,66 +698,9 @@ function openBubbles(){
 }
 
 /* ======================= ЗАПИСЬ ГОЛОСА ======================= */
-const REC={list:[],i:0,mr:null,busy:false};
-$('recEnhance').checked=S.voiceEnhance!==false;
-$('recEnhance').onchange=()=>{S.voiceEnhance=$('recEnhance').checked;save()};
-function openRec(){
-  $('parent').hidden=true;
-  REC.list=phraseList();REC.i=Math.min(REC.i,REC.list.length-1);
-  show('recScr');renderRec();
-}
-function renderRec(msg){
-  const p=REC.list[REC.i];if(!p)return;
-  $('recEmoji').innerHTML=glyph(p.e);
-  $('recWord').textContent=p.w;
-  const done=REC.list.filter(x=>V.clips[x.k]).length;
-  $('recCount').textContent=done+' из '+REC.list.length;
-  $('recMsg').textContent=msg||(V.clips[p.k]?'Запись есть ✓ — можно перезаписать':'Скажите слово ласково и чётко (1–2 секунды)');
-  $('recPlay').style.opacity=V.clips[p.k]?1:.3;$('recDel').style.opacity=V.clips[p.k]?1:.3;
-}
-async function recToggle(){
-  let acquiredStream=null,processingContext=null;
-  const p=REC.list[REC.i];if(!p)return;
-  if(REC.mr&&REC.mr.state==='recording'){REC.mr.stop();return;}
-  try{
-    stopSpeak();
-    const enhance=$('recEnhance').checked;
-    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:enhance,autoGainControl:enhance,channelCount:1}});
-    acquiredStream=stream;let audioCtx=null,recordStream=stream;
-    // WebAudio: фильтруем низкий гул, выравниваем громкость мягким компрессором.
-    // Нативное шумоподавление браузера по возможности убирает фоновый шум.
-    if(enhance&&window.AudioContext){
-      try{
-        audioCtx=new AudioContext();processingContext=audioCtx;await audioCtx.resume();
-        const source=audioCtx.createMediaStreamSource(stream);
-        const highpass=audioCtx.createBiquadFilter();highpass.type='highpass';highpass.frequency.value=105;highpass.Q.value=.7;
-        const lowpass=audioCtx.createBiquadFilter();lowpass.type='lowpass';lowpass.frequency.value=7300;
-        const comp=audioCtx.createDynamicsCompressor();comp.threshold.value=-28;comp.knee.value=22;comp.ratio.value=2.7;comp.attack.value=.008;comp.release.value=.22;
-        const gain=audioCtx.createGain();gain.gain.value=1.18;
-        const destination=audioCtx.createMediaStreamDestination();
-        source.connect(highpass);highpass.connect(lowpass);lowpass.connect(comp);comp.connect(gain);gain.connect(destination);
-        recordStream=destination.stream;
-      }catch(e){if(audioCtx){audioCtx.close().catch(()=>{});audioCtx=null;}recordStream=stream;}
-    }
-    if(!window.MediaRecorder)throw Error('Браузер не поддерживает запись');
-    const types=['audio/mp4','audio/webm;codecs=opus','audio/webm'];
-    const mime=types.find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
-    const mr=new MediaRecorder(recordStream,mime?{mimeType:mime}:undefined);const chunks=[];
-    REC.mr=mr;
-    mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
-    mr.onstop=async()=>{
-      stream.getTracks().forEach(t=>t.stop());
-      recordStream.getTracks().forEach(t=>t.stop());
-      if(audioCtx)audioCtx.close().catch(()=>{});
-      $('recBtn').classList.remove('on');
-      if(!chunks.length){renderRec('Ничего не записалось, попробуйте ещё раз');return;}
-      try{await putClip(p.k,new Blob(chunks,{type:mr.mimeType||mime||'audio/webm'}));renderRec(enhance?'Сохранено ✓ · звук обработан':'Сохранено ✓');}
-      catch(e){renderRec('Не удалось сохранить запись на этом устройстве');}
-    };
-    mr.start();$('recBtn').classList.add('on');$('recMsg').textContent=enhance?'Говорите… подавление шума включено':'Говорите…';
-    setTimeout(()=>{if(mr.state==='recording')mr.stop();},3500);
-  }catch(e){if(acquiredStream)acquiredStream.getTracks().forEach(t=>t.stop());if(processingContext)processingContext.close().catch(()=>{});renderRec('Не удалось записать голос. Проверьте разрешение микрофона и откройте приложение по HTTPS или localhost.');}
-}
+voiceStudio=createVoiceStudio({library:localVoice,settings:()=>S,save,glyph,
+  onOpen:()=>{$('parent').hidden=true;micStop();stopSpeak();show('recScr');}});
+const openRec=()=>voiceStudio.open();
 
 /* ======================= РЕЖИМЫ И БЛОКИРОВКА ======================= */
 const fsOK=!!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen);
@@ -965,13 +840,6 @@ $('recHome').onclick=()=>{stopSpeak();renderHome();$('parent').hidden=false;sync
 $('sayBtn').onclick=()=>{if(L&&L.tasks[L.i])say(L.tasks[L.i].speak);};
 $('sheetGo').onclick=enterChild;
 $('sheetNo').onclick=()=>{$('modeSheet').hidden=true;};
-$('recBtn').onclick=recToggle;
-$('recPlay').onclick=()=>{const p=REC.list[REC.i];if(p&&V.clips[p.k])say(p.w);};
-$('recDel').onclick=async()=>{const p=REC.list[REC.i];if(p&&V.clips[p.k]){await delClip(p.k);renderRec('Запись удалена');}};
-$('recPrev').onclick=()=>{REC.i=(REC.i-1+REC.list.length)%REC.list.length;renderRec();};
-$('recNext').onclick=()=>{REC.i=(REC.i+1)%REC.list.length;renderRec();};
-
-
 /* =================== ЛЕСНОЕ ПРИКЛЮЧЕНИЕ МАТВЕЯ =================== */
 const STORY_ALPHA=new Map();
 function alphaAt(img,x,y){
@@ -1545,7 +1413,6 @@ $('matveyBearHome').src=MATVEY_ART['bear-hero'];
 document.documentElement.style.setProperty('--bear-portrait','url(\"'+MATVEY_ART['bear-hero']+'\")');
 
 fillMascots();
-loadClips();
 renderHome();
 window.MatveyGameBridge={
  say,stop:stopSpeak,tap:sndTap,good:sndGood,
@@ -1553,6 +1420,7 @@ window.MatveyGameBridge={
  home:()=>{if(['#cafe','#parcels','#garden'].includes(location.hash))history.replaceState(null,'',location.pathname+location.search);renderHome();},
  award:(kind='picnic')=>{S.stars++;const key={picnic:'picnicServed',parcels:'parcelsDelivered',garden:'gardenHarvested'}[kind]||'picnicServed';S[key]=(S[key]||0)+1;save();}
 };
+window.__matveyVoice={ready:localVoice.ready,plan:text=>localVoice.plan(text).map(({kind,text,key})=>({kind,text,key})),say,stop:stopSpeak,keys:localVoice.keys};
 window.__sp={buildLesson,S:()=>S,setStage:n=>{S.stage=n;},
   b:{tMouth,tAct,tFill,tScene,tRequest,tTap3,tCups,tToy,tFind,tWarm,tSayNew},
   run:task=>{L={tasks:[task],i:0,wrong:0,first:true,locked:false,earned:0,startStars:S.stars,tok:(L?L.tok:0)+1,lastTap:0,tapped:false};

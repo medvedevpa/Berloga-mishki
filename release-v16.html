@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Играем и говорим — Мишка Матвей</title>
+<meta name="theme-color" content="#79c85d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Мишка Матвей"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><link rel="icon" type="image/png" href="./icon-192.png">
+<link rel="stylesheet" href="css/stylesheet-v16-9fdf0ce6df.css">
+</head>
+<body>
+
+<!-- ГЛАВНАЯ (для родителя) -->
+<section id="home" class="screen">
+  <div class="top">
+    <div class="chip">⭐ <span id="homeStars">0</span></div>
+    <div style="flex:1"></div><button class="family-open" id="familyOpen">🏆 Мои награды</button>
+    <button class="icon-btn" data-gear aria-label="Для родителей">⚙️</button>
+  </div>
+  <div class="center home-center">
+    <div class="home-feature">
+      <div class="home-brand"><h1>Играем<br><span>и говорим</span></h1><div class="home-ribbon">🐾 Мишка Матвей</div></div>
+      <img class="home-bear" id="matveyBearHome" alt="Мишка Матвей — главный герой игры" draggable="false">
+      <span class="home-spark s1">⭐</span><span class="home-spark s2">✨</span><span class="v8-hero-motto">СЛУШАЙ · ПОВТОРЯЙ · ИГРАЙ</span><span class="v8-butterfly" aria-hidden="true">🦋</span>
+    </div>
+    <section class="world-catalog" aria-label="Игры в 3D">
+ <div class="world-catalog-heading"><h2>Игры в 3D</h2><span>Бери · двигай · говори</span></div>
+ <div class="world-catalog-grid">
+  <button class="world-tile" id="picnicBtn"><span class="world-cover" aria-hidden="true"></span><div><strong>Лесное кафе · 3D</strong><small>Мою, мешаю, угощаю</small></div><b>›</b></button>
+  <button class="world-tile" id="parcelsBtn"><span class="world-cover" aria-hidden="true"></span><div><strong>Посылки для друзей</strong><small>Кладу, закрываю, дарю · 3D</small></div><b>›</b></button>
+  <button class="world-tile" id="gardenBtn"><span class="world-cover" aria-hidden="true"></span><div><strong>Сад Матвея</strong><small>Сажаю, поливаю, собираю · 3D</small></div><b>›</b></button>
+ </div>
+ <p id="gameLoadError" role="status" hidden>Игра не загрузилась. Нажмите «Обновить приложение» и попробуйте снова.</p>
+</section>
+<div class="app-update"><span>Версия 15 · новые 3D-модели</span><button id="appUpdate" type="button">Обновить приложение</button><span id="appUpdateStatus" role="status" aria-live="polite"></span></div>
+<p id="picnicLoadError" role="status" hidden>Не удалось загрузить игру. Проверьте загрузку обновления и попробуйте снова.</p>
+    <div class="home-actions home-actions-v6">
+
+      <button class="btn live-primary" id="liveBtn"><span class="home-emoji"><img data-v8-art="animal-cow" alt="" draggable="false"></span><span class="home-action-copy"><strong>Живые карточки</strong><small>Слушаем · повторяем · называем</small></span><b class="home-chev">›</b></button>
+      <button class="btn story-primary" id="adventureBtn"><span class="home-emoji"><img data-v8-art="plant-tree" alt="" draggable="false"></span><span class="home-action-copy"><strong>Приключения речи</strong><small>Ищем животных и растения</small></span><b class="home-chev">›</b></button>
+      <button class="btn m-home-btn" id="montessoriBtn"><span class="home-emoji"><img data-v8-art="animal-rabbit" alt="" draggable="false"></span><span class="home-action-copy"><strong>Монтессори-игры</strong><small>Сортируем · подбираем · кормим</small></span><b class="home-chev">›</b></button>
+      <button class="btn disc-home-btn" id="discoveryBtn"><span class="home-emoji">🌟</span><span class="home-action-copy"><strong>Лесная школа — 12 игр</strong><small>Сравниваем · считаем · рассуждаем</small></span><b class="home-chev">›</b></button>
+      <button class="btn magic-primary" id="magicBtn"><span class="home-emoji"><img data-v8-art="animal-mushroom" alt="" draggable="false"></span><span class="home-action-copy"><strong>Волшебная мастерская</strong><small>Домики · цветы · пирамидка</small></span><b class="home-chev">›</b></button>
+      <button class="btn play-primary" id="playBtn"><span class="home-emoji">🎤</span><span>Играть вместе</span></button>
+      <button class="btn room-primary" id="roomBtn"><span class="home-emoji">🎵</span><span>Звуковая комната</span></button>
+      <button class="btn bub-primary" id="bubBtn"><span class="home-emoji">🫧</span><span>Пузыри</span></button>
+      <button class="btn child-primary" id="childBtn"><span class="home-emoji">🔒</span><span>Детский режим</span></button>
+    </div>
+    <div class="home-progress">
+      <div class="progress-content"><div class="progress-kicker" id="nextTxt">До новой наклейки</div><div class="bar"><i id="nextBar"></i></div></div>
+      <span class="progress-gift" aria-hidden="true">🎁</span>
+    </div>
+    <div class="collection-wrap"><div class="collection-title">⭐ Мои наклейки</div><div class="collection" id="collection"></div></div>
+  </div>
+  <div class="parent-hint">⚙️ для родителей (голос, этапы, советы, блокировка): удерживайте 1 секунду</div>
+</section>
+
+
+<!-- v12: local WebGL playroom, loaded only on entry. -->
+<section id="picnicScr" class="screen" hidden aria-label="Лесное кафе: объёмная игра">
+ <header class="picnic-top">
+  <button id="picnicHome" class="icon-btn" aria-label="Выйти из 3D-игры на главную">⌂</button>
+  <div class="picnic-brand"><small>МАСТЕРСКАЯ МИШКИ МАТВЕЯ</small><strong>Лесное кафе</strong></div>
+  <span id="picnicOrder" class="picnic-order"></span>
+  <button id="picnicReplay" class="icon-btn" aria-label="Повторить слова и задание">🔊</button>
+ </header>
+ <div class="picnic-main">
+  <div class="picnic-play">
+   <div class="picnic-view">
+    <div id="picnicCanvas"></div>
+    <div class="picnic-scene-tag">МАЛЕНЬКИЕ ДЕЛА · БОЛЬШАЯ РАДОСТЬ</div>
+    <div class="picnic-bubble">Скажем вместе?<strong id="picnicWord">ДАЙ</strong></div>
+    <div id="picnicError" class="picnic-error" hidden><p id="picnicErrorText"></p><button id="picnicRetry" class="picnic-action">Попробовать снова</button></div>
+   </div>
+   <div class="picnic-controls"><div id="picnicActions" class="picnic-actions" aria-label="Действия в игре"></div><p id="picnicStatus" role="status" aria-live="polite"></p><button id="picnicNext" class="picnic-next" hidden disabled>Дальше ➜</button></div>
+  </div>
+  <aside class="picnic-sidebar">
+   <div class="picnic-guide"><img src="assets/bear-hero.webp" alt="Мишка Матвей"><p>Поиграем, поможем другу и попробуем сказать!</p></div>
+   <div id="picnicSteps" class="picnic-steps" aria-label="Шаги приготовления"></div>
+   <h2 id="picnicTitle">Попросим угощение</h2>
+   <p id="picnicInstruction"></p>
+   <div id="picnicSpeech" class="picnic-speech" hidden><strong id="picnicSpeechWord"></strong>Теперь пауза. Можно попробовать звук, слово или жест.<br><button id="picnicTry">Мы попробовали!</button></div>
+
+   <details><summary>Поиграем по-настоящему</summary><p id="picnicRealText"></p></details>
+   <div class="picnic-options"><label>Речь <select id="picnicLevel" aria-label="Уровень речевой подсказки"><option value="0">Звуки</option><option value="1" selected>Слова</option><option value="2">Короткие фразы</option></select></label><label><input type="checkbox" id="picnicHaptic">Лёгкая вибрация, если доступна</label></div>
+  </aside>
+ </div>
+</section>
+<section id="worldScr" class="screen" hidden aria-label="Развивающие 3D-игры">
+ <header class="picnic-top">
+  <button id="worldHome" class="icon-btn" aria-label="Выйти из 3D-игры на главную">⌂</button>
+  <div class="picnic-brand"><small>МАСТЕРСКАЯ МИШКИ МАТВЕЯ</small><strong id="worldName">Посылки для друзей</strong></div>
+  <span id="worldRound" class="picnic-order"></span>
+  <button id="worldReplay" class="icon-btn" aria-label="Повторить слова и задание">🔊</button>
+ </header>
+ <div class="picnic-main">
+  <div class="picnic-play">
+   <div class="picnic-view">
+    <div id="worldCanvas"></div>
+    <div id="worldTag" class="picnic-scene-tag">МАЛЕНЬКИЕ ОТКРЫТИЯ</div>
+    <div class="picnic-bubble">Скажем вместе?<strong id="worldWord">ДАЙ</strong></div>
+    <div id="worldError" class="picnic-error" hidden><p id="worldErrorText">Не удалось открыть 3D-сцену. Попробуйте снова или вернитесь на главную.</p><button id="worldRetry" class="picnic-action">Попробовать снова</button></div>
+   </div>
+   <div class="picnic-controls"><div id="worldActions" class="picnic-actions" aria-label="Действия в игре"></div><p id="worldStatus" role="status" aria-live="polite"></p><button id="worldNext" class="picnic-next" hidden disabled>Дальше ➜</button></div>
+  </div>
+  <aside class="picnic-sidebar">
+   <div class="picnic-guide"><img src="assets/bear-hero.webp" alt="Мишка Матвей"><p>Поиграем, поможем другу и попробуем сказать!</p></div>
+   <div id="worldSteps" class="picnic-steps" aria-label="Шаги приготовления"></div>
+   <h2 id="worldTitle">Попросим угощение</h2>
+   <p id="worldInstruction"></p>
+   <div id="worldSpeech" class="picnic-speech" hidden><strong id="worldSpeechWord"></strong>Теперь пауза. Можно попробовать звук, слово или жест.<br><button id="worldTry">Мы попробовали!</button></div>
+
+   <details><summary>Поиграем по-настоящему</summary><p id="worldReal"></p></details>
+   <div class="picnic-options"><label>Речь <select id="worldLevel" aria-label="Уровень речевой подсказки"><option value="0">Звуки</option><option value="1" selected>Слова</option><option value="2">Короткие фразы</option></select></label><label><input type="checkbox" id="worldHaptic">Лёгкая вибрация, если доступна</label></div>
+  </aside>
+ </div>
+</section>
+
+
+<!-- МИР ОТКРЫТИЙ: самостоятельные сенсорные задания -->
+<section id="montessoriScr" class="screen" hidden aria-label="Мир открытий с мишкой Матвеем">
+  <div class="top">
+    <button class="icon-btn" id="mHome" aria-label="Вернуться на главную">🏠</button>
+    <div class="m-main-title">✨ Мастерская Матвея</div>
+    <div class="chip" style="font-size:17px">⭐ <span id="mStars">0</span></div>
+  </div>
+  <div class="m-scroll" id="mScroll">
+    <button class="disc-more" id="discMoreBtn">🌟 Открыть ещё 12 игр с Матвеем ➜</button>
+    <div class="m-menu" aria-label="Выбор игры">
+      <button class="m-mode active" data-m-mode="colors"><span>🎨</span>Цвета</button>
+      <button class="m-mode" data-m-mode="shapes"><span>🧩</span>Фигуры</button>
+      <button class="m-mode" data-m-mode="friends"><span>🐰</span>Помоги друзьям</button>
+    </div>
+    <div class="m-intro">
+      <img class="m-bear" id="mBear" alt="Мишка Матвей" draggable="false">
+      <div class="m-dialog">
+        <div class="m-eyebrow">МИШКА МАТВЕЙ ПРИГЛАШАЕТ</div>
+        <h2 id="mHeading">Разложим шарики!</h2>
+        <p id="mInstruction">Положи каждый шарик в корзинку своего цвета.</p>
+      </div>
+      <button id="mReplay" class="m-audio-btn" aria-label="Повторить задание">🔊</button>
+    </div>
+    <div class="m-world" id="mWorld">
+      <div class="m-cloud one"></div><div class="m-cloud two"></div><div class="m-tree left"></div><div class="m-tree right"></div>
+      <div class="m-board" id="mBoard">
+        <div class="m-board-title" id="mBoardTitle">Цветные корзинки</div>
+        <div class="m-target-grid" id="mTargets"></div>
+      </div>
+    </div>
+    <div class="m-tray"><div class="m-tray-label" id="mTrayTitle">Возьми шарик и положи в корзинку 👆</div><div class="m-toys" id="mToys"></div></div>
+    <div class="m-message" id="mMessage" role="status" aria-live="polite">Можно перетащить или нажать сначала на предмет, потом на место.</div>
+  </div>
+  <div class="m-footer"><div class="m-steps" id="mProgress">Готово: 0 из 6</div><button class="m-repeat" id="mRepeat">↻ Повторить</button><button class="m-next" id="mNext" hidden>Дальше ➜</button></div>
+</section>
+
+
+<!-- Ещё десять самостоятельных развивающих мини-игр -->
+<section id="discoveryScr" class="screen" hidden aria-label="Лесная школа Матвея: двенадцать развивающих игр">
+ <div class="top">
+  <button class="icon-btn" id="discHome" aria-label="Вернуться домой">🏠</button>
+  <div class="disc-title">🌟 Лесная школа Матвея</div>
+  <div class="chip" style="font-size:17px">⭐ <span id="discStars">0</span></div>
+ </div>
+ <div class="disc-scroll" id="discScroll">
+  <div id="discCatalog">
+   <div class="disc-hero">
+    <img id="discBearMenu" alt="Мишка Матвей приглашает играть" draggable="false">
+    <div class="disc-hero-copy"><strong>12 волшебных игр!</strong>Трогай, сравнивай, считай и называй вместе с Матвеем. Выбирай любую игру!</div>
+   </div>
+   <div class="disc-subhead" style="margin:14px auto 13px;display:table">Выбирай, во что играть 🐾</div>
+   <div class="disc-grid" id="discGrid"></div>
+  </div>
+  <div class="disc-play" id="discPlay" hidden>
+   <div class="disc-game-top"><button class="disc-back" id="discBack">‹ Все игры</button><div class="disc-game-name" id="discGameName"></div></div>
+   <div class="disc-steps" id="discSteps" aria-label="Прогресс в игре"></div>
+   <div class="disc-instruction">
+    <img id="discBearPlay" alt="Мишка Матвей" draggable="false"><span id="discPrompt"></span>
+    <button class="disc-audio" id="discReplay" aria-label="Повторить задание">🔊</button>
+   </div>
+   <div class="disc-scene" id="discScene"></div>
+   <div class="disc-choices" id="discChoices"></div>
+   <div class="disc-status" id="discStatus" role="status" aria-live="polite">Выбери предмет!</div>
+   <div class="disc-controls"><button class="btn green" id="discNext" hidden disabled>Дальше ➜</button><button class="btn ghost" id="discRestart">↻ Заново</button></div>
+  </div>
+ </div>
+</section>
+
+
+<!-- ЖИВЫЕ КАРТОЧКИ. Сами персонажи — отдельные иллюстрации. -->
+<section class="screen v6-screen" id="liveScr" hidden>
+  <div class="top v6-top"><button class="icon-btn" id="liveHome" aria-label="Домой">⌂</button><div class="wood-mini">🐾 Живые карточки</div><div class="chip">⭐ <span id="liveStars">0</span></div></div>
+  <div class="v6-scroll">
+    <div class="v6-guide"><img id="liveBear" draggable="false" alt="Мишка Матвей"><div class="v6-guide-text"><div class="v6-eyebrow">МИШКА МАТВЕЙ</div><strong id="liveInstruction">Послушай, кто как говорит!</strong><small>Нажми на животное, послушай и повтори его звук.</small></div><button class="v6-listen" id="liveRepeat" aria-label="Повторить подсказку">🔊</button></div>
+    <div class="live-stage"><div class="v6-card-list" id="liveCards"></div></div>
+    <div class="live-navigation" id="liveNavigation"><button id="livePrev" class="icon-btn" aria-label="Предыдущее животное">‹</button><span id="liveCounter"></span><button id="liveNext" class="icon-btn" aria-label="Следующее животное">›</button></div>
+    <div id="liveThumbs" class="live-thumbs" aria-label="Выбрать животное"></div>
+    <div class="real-play-tip">🐾 А теперь без экрана: покажите игрушку и попросите «ДАЙ». Подождите слова или жеста.</div>
+    <div class="v6-soft-note">💛 Не нужно торопиться. Можно слушать и повторять сколько угодно раз.</div>
+  </div>
+</section>
+<!-- НОВАЯ ИНТЕРАКТИВНАЯ ИГРА: ДОМИК, САД, ПИРАМИДКА -->
+<section class="screen v6-screen" id="magicScr" hidden>
+  <div class="top v6-top"><button class="icon-btn" id="magicHome" aria-label="Домой">⌂</button><div class="wood-mini">✨ Мастерская Матвея</div><div class="chip">⭐ <span id="magicStars">0</span></div></div>
+  <div class="v6-scroll magic-scroll">
+    <div class="magic-tabs"><button data-magic-mode="house" class="on">🏡 Домики</button><button data-magic-mode="garden">🌷 Цветы</button><button data-magic-mode="tower">🪀 Пирамидка</button></div>
+    <div class="v6-guide"><img id="magicBear" draggable="false" alt="Мишка Матвей"><div class="v6-guide-text"><div class="v6-eyebrow">ДАВАЙ ИГРАТЬ ВМЕСТЕ!</div><strong id="magicInstruction">Откроем домики!</strong><small id="magicSub">Нажимай на дверцы и говори «КУ-КУ».</small></div><button class="v6-listen" id="magicRepeat" aria-label="Повторить задание">🔊</button></div>
+    <div class="magic-scene" id="magicScene" aria-label="Игровая сцена"></div>
+    <div class="magic-status" id="magicStatus" aria-live="polite">Попробуй сам!</div>
+    <div class="magic-bottom"><span id="magicProgress">0 из 3</span><button class="magic-reset" id="magicReset">↻ Ещё раз</button><button class="magic-next" id="magicNext" hidden disabled>Дальше ➜</button></div>
+    <div class="v6-soft-note">🎧 Слушай, повторяй и действуй. Игра ждёт ответа — сама дальше не перелистывает.</div>
+  </div>
+</section>
+
+<!-- ЗАНЯТИЕ -->
+<section id="lesson" class="screen" hidden>
+  <div class="top">
+    <button class="icon-btn p-only" id="homeBtn" aria-label="Домой">🏠</button>
+    <div class="dots" id="dots"></div>
+    <div class="chip" id="starChip">⭐ <span id="stars">0</span></div>
+    <button class="icon-btn p-only" data-gear aria-label="Для родителей">⚙️</button>
+  </div>
+  <div class="prompt">
+    <div class="mascot mini" data-mascot data-m="rest"></div>
+    <div class="txt" id="promptTxt"></div>
+    <button class="say p-only" id="sayBtn" aria-label="Озвучить" hidden>🔊</button>
+  </div>
+  <div class="stage" id="stage"></div>
+</section>
+
+<section id="roomScr" class="screen" hidden>
+  <div class="top">
+    <button class="icon-btn" id="roomHome" aria-label="Домой">🏠</button>
+    <div style="flex:1;text-align:center;font-weight:800;font-size:22px">Нажимай и повторяй!</div>
+    <button class="icon-btn" data-gear aria-label="Для родителей">⚙️</button>
+  </div>
+  <div class="room" id="room"></div>
+  <div class="tip">Нажмите на картинку и скажите звук вместе с экраном — коротко, чётко, 2–3 раза. Потом помолчите: вдруг малыш повторит.</div>
+</section>
+
+<section id="bubScr" class="screen" hidden>
+  <div class="top">
+    <button class="icon-btn" id="bubHome" aria-label="Домой">🏠</button>
+    <div style="flex:1;text-align:center;font-weight:800;font-size:22px">Лопай пузыри!</div>
+    <button class="icon-btn" data-gear aria-label="Для родителей">⚙️</button>
+  </div>
+  <div class="bubbles" id="bubbles"></div>
+  <div class="tip">Лопайте пузыри и говорите «ПУФ!». Ещё лучше — подуйте настоящие мыльные пузыри вместе: дуть и лопать — хорошая тренировка губ.</div>
+</section>
+
+
+<!-- ИНТЕРАКТИВНАЯ СКАЗКА: изображения из заданий Матвея -->
+<section id="adventureScr" class="screen adventure-screen" hidden>
+  <div class="top">
+    <button class="icon-btn" id="adventureHome" aria-label="На главную">⌂</button>
+    <div class="story-title">🌲 Лес Матвея</div>
+    <div class="chip">⭐ <span id="adventureStars">0</span></div>
+  </div>
+  <div class="story-scroll">
+    <div class="story-tabs">
+      <button class="story-tab on" id="storyAnimals">🐾 Кто как говорит?</button>
+      <button class="story-tab" id="storyPlants">🌼 Где растёт?</button>
+    </div>
+    <div class="story-chat">
+      <div class="story-bear-wrap"><img id="matveyBearStory" alt="Мишка-помощник" draggable="false"></div>
+      <div class="story-bubble"><div class="story-said-by">МИШКА МАТВЕЙ ГОВОРИТ:</div><div class="story-prompt" id="storyPrompt">Привет, Матвей!</div>
+        <button class="story-voice" id="storyReplay" aria-label="Повтори задание">🔊</button></div>
+    </div>
+    <div class="story-forest" id="storyForest" aria-label="Волшебный лес"><div id="storyHotspots"></div></div>
+    <div class="story-feedback" id="storyFeedback" aria-live="polite">Покажи ответ на картинке или выбери карточку!</div>
+    <div class="story-choices-title" id="storyChoicesTitle">Кого будем искать?</div>
+    <div class="story-choices" id="storyCards"></div>
+    <div class="story-footer"><div class="story-progress" id="storyProgress"></div><button class="btn green story-next" id="storyNext" hidden>Дальше ➜</button></div>
+  </div>
+</section>
+
+<!-- ЛОКАЛЬНАЯ СТУДИЯ ГОЛОСА РОДИТЕЛЯ -->
+<section id="recScr" class="screen" hidden>
+  <div class="top">
+    <button class="icon-btn" id="recHome" aria-label="Назад">←</button>
+    <div class="voice-title">Ваш голос в игре <span id="recCount"></span></div>
+  </div>
+  <div class="voice-scroll">
+    <div class="voice-intro">
+      <p>Запишите частые реплики один раз — они прозвучат вашим голосом во всех играх. Незаписанные фразы читает устройство.</p>
+      <details class="voice-about"><summary>Как используются записи</summary><p>Игра подставляет совпавшие целые фразы, в том числе внутри длинного задания. Новые слова из образцов голоса не создаются. Запись и обработка происходят только на вашем устройстве.</p></details>
+      <div class="voice-fields">
+        <label>Набор фраз<select id="recGroup"></select></label>
+        <label>Поиск в наборе<input id="recSearch" type="search" placeholder="Например: дай" maxlength="100"></label>
+      </div>
+      <progress id="recProgress" value="0" max="24" aria-label="Записано в наборе"></progress>
+      <small id="recSummary"></small>
+      <select id="recPhrase" aria-label="Выбрать фразу"></select>
+    </div>
+    <div class="voice-card">
+      <div class="rec-big" id="recEmoji">🎙️</div>
+      <div class="rec-word" id="recWord"></div>
+      <div id="recMsg" role="status" aria-live="polite"></div>
+      <div class="voice-meter"><meter id="recMeter" min="0" max="1" value="0" aria-label="Уровень микрофона"></meter><span id="recLevelText">Микрофон выключен</span></div>
+      <button class="rec-btn" id="recBtn" aria-label="Записать фразу">● Записать</button>
+      <div class="voice-controls">
+        <button class="btn ghost" id="recPrev" aria-label="Предыдущая фраза">←</button>
+        <button class="btn ghost" id="recPlay">▶ Послушать</button>
+        <button class="btn ghost" id="recNext" aria-label="Следующая фраза">→</button>
+      </div>
+      <button class="btn ghost" id="recSkip">К следующей без записи</button>
+      <label class="rec-enhance"><input type="checkbox" id="recEnhance" checked> Подавлять шум, убирать паузы по краям и выравнивать громкость</label>
+      <label class="voice-gain">Усиление при сохранении: <span id="recGainValue">1.0×</span><input id="recGain" type="range" min="0.6" max="1.8" step="0.1" value="1"></label>
+      <div class="voice-controls"><button class="btn ghost" id="recOriginal" disabled>▶ До обработки</button><button class="btn ghost" id="recDel">Удалить эту запись</button></div>
+      <details class="voice-custom"><summary>Добавить свою фразу</summary><div class="voice-fields"><label>Текст для записи<input id="recCustomText" type="text" maxlength="240" placeholder="Например: Матвей, давай поиграем!"></label></div><button class="btn ghost" id="recAdd">Добавить фразу</button></details>
+    </div>
+    <div class="voice-backup">
+      <p>Чтобы сохранить голос при смене телефона, скачайте копию и загрузите её на другом устройстве. Загрузка добавляет отсутствующие записи, сохраняя существующие.</p>
+      <div class="voice-controls"><button class="btn ghost" id="recExport">↓ Сохранить копию голоса</button><button class="btn ghost" id="recImportBtn">↑ Загрузить копию</button></div>
+      <input id="recImport" type="file" accept="application/json,.json" hidden>
+      <small>Записывайте в тихой комнате примерно в 15–20 см от микрофона, без музыки. Обработка базовая; прослушайте результат. Очистка данных браузера удаляет записи. Передачи аудио на сервер нет.</small>
+    </div>
+  </div>
+</section>
+
+<!-- КОНЕЦ ЗАНЯТИЯ -->
+<section id="end" class="screen" hidden>
+  <div class="center">
+    <div class="hero" id="endHero">🎉</div>
+    <h1 id="endTitle">Молодец!</h1>
+    <div class="chip" style="font-size:30px">⭐ +<span id="endStars">0</span></div>
+    <div class="sub" id="endSticker"></div>
+    <div class="actions p-only">
+      <button class="btn green" id="againBtn">▶ Ещё!</button>
+      <button class="btn ghost" id="endHome">🏠</button>
+    </div>
+  </div>
+</section>
+
+<button class="lockbtn" id="lockBtn" aria-label="Для родителей: удерживайте 3 секунды">🔒</button>
+<div class="listening" id="micDot" hidden>🎤</div>
+
+<!-- ОВЕРЛЕЙ: лист запуска детского режима -->
+<div id="modeSheet" class="overlay" hidden>
+  <div class="panel">
+    <h2>👶 Детский режим</h2>
+    <p>Что произойдёт:</p>
+    <ul>
+      <li>Игра откроется на весь экран, пропадут кнопки домой и настроек. Занятия пойдут одно за другим сами.</li>
+      <li>Нажатия клавиш, правый клик и часть жестов внутри игры будут игнорироваться. Системный жест выхода iPhone этим не блокируется: используйте «Гид-доступ» в настройках iOS.</li>
+      <li>Экран не будет гаснуть. Голос сам читает задания, мишка показывает рот.</li>
+      <li>Сеанс закончится через <b id="sheetMin">10</b> мин спокойным «пока-пока».</li>
+      <li><b>Выйти:</b> удерживайте 🔒 в левом нижнем углу 3 секунды и решите пример.</li>
+    </ul>
+    <small>Честно: страница не может заблокировать кнопку Home и системные жесты телефона. На iPhone включите «Гид-доступ», на Android — закрепление экрана (инструкция в настройках → «Блокировка на телефоне»).</small>
+    <div class="actions"><button class="btn green" id="sheetGo">▶ Начать</button><button class="btn ghost" id="sheetNo">Отмена</button></div>
+  </div>
+</div>
+
+<!-- ОВЕРЛЕЙ: родительский замок -->
+<div id="gate" class="overlay" hidden style="z-index:30">
+  <div class="panel" style="align-items:center;text-align:center">
+    <h2>Только для взрослых</h2>
+    <p>Сколько будет <b id="gateQ" style="font-size:28px;color:var(--ink)"></b>?</p>
+    <div class="gate-opts" id="gateOpts"></div>
+    <button class="btn ghost" id="gateNo">Назад к игре</button>
+  </div>
+</div>
+
+<!-- ОВЕРЛЕЙ: вернулись из полноэкранного режима -->
+<div id="resume" class="overlay solid" hidden style="z-index:25">
+  <div class="mascot hero" data-mascot data-m="rest"></div>
+  <button class="btn green" id="resumeBtn" style="font-size:34px;padding:22px 50px">▶ Играем!</button>
+</div>
+
+<!-- ОВЕРЛЕЙ: сеанс окончен -->
+<div id="breakOv" class="overlay solid" hidden style="z-index:24">
+  <div class="mascot hero" id="breakMascot" data-mascot data-m="rest"></div>
+  <h1>Пока-пока! 👋</h1>
+  <div class="sub" id="breakIdea" style="max-width:520px"></div>
+  <div class="parent-hint">Родителю: удерживайте 🔒 3 секунды, чтобы выйти.</div>
+</div>
+
+<!-- ПАНЕЛЬ ДЛЯ РОДИТЕЛЕЙ -->
+<div id="parent" class="overlay" hidden>
+  <div class="panel">
+    <h2>Для родителей</h2>
+
+    <details open>
+      <summary>🔊 Голос</summary>
+      <div>
+        <div class="row"><span>Озвучка включена</span><button class="switch" data-set="voiceOn" aria-label="Озвучка"></button></div>
+        <div class="row"><span>Читать задание сразу (в режиме «вместе»)</span><button class="switch" data-set="auto" aria-label="Автоозвучка"></button></div>
+        <label><small>Голос устройства (выберите самый приятный женский)</small><select id="voiceSel"></select></label>
+        <label><small>Скорость речи: <span id="rateVal"></span></small><input type="range" id="rate" min="0.6" max="1" step="0.05"></label>
+        <button class="btn ghost" id="voiceTest">▶ Послушать голос</button>
+        <small id="voiceHint"></small>
+        <button class="btn blue" id="recOpen" style="font-size:18px;padding:12px 18px">🎙 Ваш голос в игре</button>
+        <small>Запишите частые реплики или фразы из 3D-игр. Они автоматически заменят голос устройства при совпадении текста. Все аудио остаются на устройстве; можно скачать копию.</small>
+      </div>
+    </details>
+
+
+    <details id="reviewDetails">
+      <summary>🛠 Проверка карточек без базы данных</summary>
+      <div class="review-hint">Отметь карточку, если слово или озвучка не нравится. Скрытые карточки исчезнут из раздела «Живые карточки». Пометки и свои тексты хранятся только на этом устройстве. Удаление данных браузера их удалит — сохраняй резервную копию.</div>
+      <div class="review-tools"><input id="reviewSearch" type="search" placeholder="Найти: корова, лиса, гриб…" aria-label="Поиск карточек"><select id="reviewFilter" aria-label="Фильтр"><option value="all">Все карточки</option><option value="flagged">⚑ Требуют проверки</option><option value="hidden">🙈 Скрытые</option><option value="ok">✓ Проверенные</option></select></div>
+      <div class="review-summary" id="reviewSummary"></div>
+      <div class="review-grid" id="reviewList"></div>
+      <div class="review-tools"><button class="review-tool-btn" id="reviewExport" type="button">⬇ Выгрузить замечания</button><button class="review-tool-btn" id="reviewImportBtn" type="button">⬆ Загрузить копию</button><input id="reviewImport" type="file" accept="application/json,.json" hidden></div>
+      <small>Изменённая озвучка используется в живых карточках. У отдельных заданий лесной истории есть собственные фразы: пометки помогут найти их при дальнейшей правке проекта.</small>
+    </details>
+
+    <details>
+      <summary>👶 Детский режим</summary>
+      <div>
+        <div class="row"><span>Длина сеанса</span></div>
+        <div class="seg" id="sessSeg"><button data-sess="5">5 мин</button><button data-sess="10">10 мин</button><button data-sess="15">15 мин</button><button data-sess="0">без лимита</button></div>
+        <small>5–10 минут подходит для возраста 2,5 лет (ориентир логопеда; точные цифры нужно уточнить у вашего логопеда). После лимита игра предложит игру вживую.</small>
+        <div class="row"><span>🎤 Слушать голос ребёнка</span><button class="switch" data-set="mic" aria-label="Микрофон"></button></div>
+        <small>Игра слышит, что ребёнок издал звук, и радуется. Распознавания слов нет, только «есть звук». Звук не записывается и никуда не отправляется. Включайте в тихой комнате.</small>
+        <div class="row"><span>Звуки эффектов (динь, вжух)</span><button class="switch" data-set="sound" aria-label="Звуки"></button></div>
+        <button class="btn blue" id="panelChild" style="font-size:18px;padding:12px 18px">▶ Запустить детский режим</button>
+      </div>
+    </details>
+
+    <details>
+      <summary>🎯 Этап игры</summary>
+      <div class="stages" id="stages">
+        <button class="stagebtn" data-stage="1"><b>1. Звуки, жесты, первые слова</b>Звукоподражания (АВ-АВ, БИ-БИ, БАХ), слоги, жесты, слова «ДАЙ», «НА». Пока слов 5–10.</button>
+        <button class="stagebtn" data-stage="2"><b>2. Слова-помощники и просьбы</b>ДАЙ, ЕЩЁ, НА, НЕТ, ДА, ВСЁ — просим вещи, ищем под коробками, называем действия.</button>
+        <button class="stagebtn" data-stage="3"><b>3. Два слова вместе</b>«ДАЙ МЯЧ», «ЕЩЁ ЯБЛОКО» — когда слова этапа 2 уже звучат.</button>
+      </div>
+    </details>
+
+    <details>
+      <summary>📱 Блокировка на телефоне и планшете</summary>
+      <div>
+        <small><b>iPhone / iPad — Гид-доступ.</b> Настройки → Универсальный доступ → Гид-доступ: включить, задать код. Откройте игру, трижды нажмите боковую кнопку (или Home), при желании обведите области, которые нужно отключить, нажмите «Начать». Выйти: тройное нажатие и код.</small>
+        <small><b>Android — закрепление экрана.</b> Включите в настройках (Безопасность / Дополнительные → «Закрепление экрана»), откройте обзор приложений, нажмите значок игры вверху карточки → «Закрепить». Выход: удерживать «Назад» и «Обзор» (на жестовой навигации — смахнуть вверх и удерживать). Названия пунктов зависят от модели.</small>
+        <small>Эти способы — средства самой операционной системы. Без них страница в браузере не может заблокировать кнопку Home и системные жесты.</small>
+        <small><b>Компьютер (Chrome/Edge).</b> Детский режим включает полный экран и блокировку клавиатуры; выход из полного экрана — зажать Esc, но игра сразу предложит вернуться. Ctrl+Alt+Del, клавишу Windows и некоторые сочетания страница заблокировать не может.</small>
+      </div>
+    </details>
+
+    <details>
+      <summary>👩‍👦 Как играть вместе</summary>
+      <ul>
+        <li>Говорите слово медленно и коротко, лицом к ребёнку, несколько раз.</li>
+        <li>После вопроса помолчите до 10 секунд (в игре есть полоска). Не подсказывайте сразу.</li>
+        <li>Если молчит — подскажите первый звук (игра покажет его сама).</li>
+        <li>Хвалите любую попытку: звук, слог, жест. Кнопка «Попытался» засчитывается всегда.</li>
+        <li>Лучше понемногу каждый день, чем долго раз в неделю. Игра — лишь часть дня: говорите и играйте вживую.</li>
+        <li>После просьбы «ДАЙ» давайте настоящий предмет: так слово становится полезным.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>🧸 Те же игры без экрана</summary>
+      <ul>
+        <li><b>Зеркало.</b> Сядьте перед зеркалом: рожицы, «пр-р», чмоканье. Пауза — вдруг повторит.</li>
+        <li><b>Пузыри.</b> Дуйте мыльные пузыри, лопайте со звуком «П-П-П».</li>
+        <li><b>Звуки в игре.</b> Машинка «БИ-БИ», мяч «Б-Б-Б», змейка «С-С-С», барабан «БУМ-БУМ».</li>
+        <li><b>Покормим мишку.</b> Мишка съел кашу и сказал «АМ!». Попросите покормить.</li>
+        <li><b>Коробки и «ОТКРОЙ».</b> Прячьте игрушки в коробки и ждите «ОТ-КРОЙ» и «ТАМ».</li>
+        <li><b>Ку-ку.</b> Прячьтесь за ладошками и появляйтесь с «КУ-КУ!».</li>
+        <li><b>Мячик туда-обратно.</b> Катайте мяч, говорите «НА», «ДАЙ», «БАХ».</li>
+        <li><b>Песенка без слов.</b> Знакомую мелодию на «ля-ля-ля» с паузой в конце.</li>
+        <li><b>Книжка.</b> Сначала рассматриваем, потом показываем игрушками.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>📊 Прогресс</summary>
+      <div>
+        <small id="weak">Пока нет данных.</small>
+        <small id="statsTxt"></small>
+        <button class="danger" id="resetBtn">Сбросить прогресс</button>
+      </div>
+    </details>
+
+    <small>Если в 2,5 года слов очень мало, стоит показать ребёнка логопеду и проверить слух: так рекомендуют и Hanen, и российские методические материалы. Игра их не заменяет. Исследований о пользе приложений для речи у детей до 3 лет я не нашёл: лучше всего подтверждены занятия родителей с ребёнком в игре.</small>
+    <button class="btn" id="closeParent">Готово</button>
+  </div>
+</div>
+
+<div id="fx"></div>
+
+<dialog id="familyDialog" class="family-dialog" aria-labelledby="familyTitle">
+ <div class="family-dialog-top"><h2 id="familyTitle">Сокровища Матвея</h2><button id="familyClose" class="icon-btn" aria-label="Закрыть награды">×</button></div>
+ <div id="familyContent"></div>
+ <p id="familyMessage" role="status" aria-live="polite"></p>
+</dialog>
+<script type="module" src="js/release/v16/app-N76U7TPY.js"></script>
+</body>
+</html>

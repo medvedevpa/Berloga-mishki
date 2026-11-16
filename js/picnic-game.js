@@ -1,5 +1,5 @@
-import {FOODS,STEPS} from './picnic-data.js?v=15';
-import {PicnicScene} from './picnic-scene.js?v=15';
+import {FOODS,STEPS} from './picnic-data.js?v=16';
+import {PicnicScene} from './picnic-scene.js?v=16';
 const $=id=>document.getElementById(id);
 let world=null,active=false,round=0,step=0,solved=false,selected=null,placed=false,works=0,started=0,timer=0,level=1,epoch=0,granted=false,abort=null;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
