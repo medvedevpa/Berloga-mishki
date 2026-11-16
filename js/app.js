@@ -345,7 +345,7 @@ function buildLesson(){
 
 /* ======================= СОСТОЯНИЕ ЭКРАНОВ ======================= */
 let L=null,waitTm=null,sessionStart=Date.now(),bubTm=null,childMode=false,wakeLock=null,breakShown=false;
-const SCREENS=['home','lesson','end','roomScr','bubScr','recScr','adventureScr','montessoriScr','discoveryScr','liveScr','magicScr'];
+const SCREENS=['home','lesson','end','roomScr','bubScr','recScr','adventureScr','montessoriScr','discoveryScr','liveScr','magicScr','picnicScr'];
 function show(id){SCREENS.forEach(s=>$(s).hidden=(s!==id));}
 const alive=tok=>!!L&&L.tok===tok&&childMode&&!breakShown;
 function overLimit(){return !!S.sessionMin&&(Date.now()-sessionStart)>=S.sessionMin*60000*FAST()*(window.__fast?50:1);}
@@ -1547,6 +1547,12 @@ document.documentElement.style.setProperty('--bear-portrait','url(\"'+MATVEY_ART
 fillMascots();
 loadClips();
 renderHome();
+window.MatveyGameBridge={
+ say,stop:stopSpeak,tap:sndTap,good:sndGood,
+ enter:()=>{L=null;stopWait();clearInterval(bubTm);storyStop();mClearTimer();magicClear();clearTimeout(D.timer);D.stamp++;stopSpeak();show('picnicScr');},
+ home:()=>renderHome(),
+ award:()=>{S.stars++;S.picnicServed=(S.picnicServed||0)+1;save();}
+};
 window.__sp={buildLesson,S:()=>S,setStage:n=>{S.stage=n;},
   b:{tMouth,tAct,tFill,tScene,tRequest,tTap3,tCups,tToy,tFind,tWarm,tSayNew},
   run:task=>{L={tasks:[task],i:0,wrong:0,first:true,locked:false,earned:0,startStars:S.stars,tok:(L?L.tok:0)+1,lastTap:0,tapped:false};

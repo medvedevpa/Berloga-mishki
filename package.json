@@ -1,13 +1,16 @@
 {
   "name": "matvey-speech-play",
-  "version": "11.0.0",
+  "version": "12.0.0",
   "private": true,
   "description": "Buildless offline family games. Dependencies are only for development checks.",
   "scripts": {
-    "test": "node tests/smoke.cjs && node tests/regression.cjs",
-    "cache": "python3 tools/update-cache.py"
+    "test": "node tests/smoke.cjs && node tests/regression.cjs && node tests/picnic.cjs && node tests/picnic-fallback.cjs",
+    "cache": "python3 tools/update-cache.py",
+    "vendor:three": "node tools/vendor-three.cjs"
   },
   "devDependencies": {
-    "playwright": "^1.58.0"
+    "playwright": "^1.58.0",
+    "three": "0.182.0",
+    "esbuild": "0.27.0"
   }
 }

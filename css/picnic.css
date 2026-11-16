@@ -1,0 +1,37 @@
+/* A dedicated WebGL playroom; no global overrides of existing games. */
+#picnicScr{max-width:1500px;padding:0;gap:0;background:#f2eddd;color:#4c4236;position:relative;overflow:auto;touch-action:pan-y;border:0}
+.picnic-top{display:flex;align-items:center;gap:14px;padding:max(10px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));background:#fffcf3;z-index:2;border-bottom:1px solid #e7ddc9;flex:none}
+.picnic-top .icon-btn{width:46px;height:46px;font-size:24px;background:#f5ead2;color:#73513c;box-shadow:0 3px 0 #d1b995;border:2px solid #fff9e7}
+.picnic-brand{flex:1;min-width:0}.picnic-brand small{display:block;letter-spacing:.14em;font-size:10px;color:#8a795e;font-weight:800}.picnic-brand strong{font-size:20px;display:block;color:#624c35}.picnic-order{font-size:13px;color:#78664d;background:#f6edd8;border-radius:16px;padding:9px 13px}
+.picnic-main{display:grid;grid-template-columns:minmax(0,1fr) 290px;flex:1;min-height:0}
+.picnic-play{display:flex;flex-direction:column;min-width:0;position:relative;background:#d7e0c5}
+.picnic-view{flex:1;min-height:450px;position:relative;isolation:isolate;overflow:hidden}
+#picnicCanvas{position:absolute;inset:0}#picnicCanvas canvas{display:block;width:100%;height:100%;touch-action:none;user-select:none}
+.picnic-scene-tag{position:absolute;top:17px;left:18px;pointer-events:none;background:#fff9e6dc;border:1px solid #fffef7;padding:7px 12px;border-radius:20px;color:#6d7659;font-size:11px;font-weight:bold;letter-spacing:.1em;box-shadow:0 3px 8px #6d745a12}
+.picnic-bubble{position:absolute;top:17px;right:18px;max-width:160px;background:#fffaf0f2;border:2px solid #fffefb;border-radius:22px 22px 5px 22px;padding:10px 14px;text-align:center;color:#715a43;font-size:15px;box-shadow:0 5px 18px #79705720;pointer-events:none}.picnic-bubble strong{font-size:25px;color:#9b7853;display:block}
+.picnic-controls{background:#fffaf0;border-top:1px solid #ebdcc4;padding:15px 20px max(14px,env(safe-area-inset-bottom));z-index:1;flex:none}
+.picnic-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.picnic-action{background:linear-gradient(#fffdf7,#f2e1bd);border:2px solid #fff9e8;color:#634a31;border-radius:18px;padding:12px 18px;min-height:50px;font-size:18px;font-weight:800;box-shadow:0 4px 0 #cfb58d;cursor:pointer}.picnic-action:active{transform:translateY(2px);box-shadow:0 2px 0 #cfb58d}
+#picnicStatus{font-size:14px;line-height:1.5;max-width:680px;text-align:center;min-height:40px;margin:13px auto 2px;color:#786c59}
+.picnic-sidebar{background:#fffcf3;border-left:1px solid #e5dbc8;padding:22px 20px;overflow:auto;display:flex;flex-direction:column;gap:18px;touch-action:pan-y}
+.picnic-guide{display:flex;gap:10px;align-items:center}.picnic-guide img{width:62px;height:75px;object-fit:contain}.picnic-guide p{font-size:13px;line-height:1.5;margin:0;color:#8b7a61}
+.picnic-sidebar h2{font-size:25px;line-height:1.15;letter-spacing:-.025em;margin:0;color:#5c4833}
+#picnicInstruction{font-size:16px;line-height:1.6;color:#7a6a53;margin:0}
+.picnic-steps{display:grid;grid-template-columns:1fr 1fr;gap:7px}.picnic-steps span{border:1px solid #e9dfcb;border-radius:12px;padding:9px 6px;text-align:center;font-size:13px;color:#aa9d85}.picnic-steps .current{background:#e7ecd8;color:#65744e;border-color:#acbc8f;font-weight:bold}.picnic-steps .done{background:#f5edda;color:#82694b}.picnic-steps .done::before{content:'✓ '}
+.picnic-next{width:100%;min-height:52px;border:2px solid #d6e5c6;border-radius:18px;color:#fffdf3;background:linear-gradient(#93ad79,#6e8d58);font-size:18px;font-weight:800;padding:12px;box-shadow:0 4px 0 #516e3b;cursor:pointer}
+.picnic-next:disabled{opacity:.5}
+.picnic-speech{background:#f4e8d3;border-radius:20px;padding:14px;font-size:14px;line-height:1.5}.picnic-speech strong{display:block;font-size:22px;color:#9a734b;margin-bottom:5px}.picnic-speech button{border:1px solid #d5b98d;background:#fff9e9;padding:9px 12px;border-radius:12px;margin-top:9px;color:#70593e;min-height:44px;font-size:14px}
+.picnic-sidebar details{background:#f2f2e4;padding:13px;border-radius:15px;font-size:13px;line-height:1.6;color:#70755a}.picnic-sidebar summary{cursor:pointer;font-weight:bold}.picnic-sidebar details p{margin:9px 0 0}
+.picnic-options{margin-top:auto;font-size:12px;color:#8a7c65;display:flex;flex-direction:column;gap:10px}.picnic-options label{display:flex;gap:8px;align-items:center}.picnic-options select{font-size:13px;padding:7px;width:auto;flex:1;background:#fffaf0;border:1px solid #dcccac;color:#6e5d44}.picnic-options input{accent-color:#809c65}
+.picnic-error{position:absolute;inset:0;z-index:5;background:#fff5dfef;display:grid;align-content:center;justify-items:center;text-align:center;padding:25px;gap:20px}.picnic-error p{max-width:420px;line-height:1.5}
+#home .home-actions-v6 .picnic-home-btn{background:linear-gradient(130deg,#e8f6d8,#f6dcb9)!important}
+#home .picnic-home-btn .home-emoji{font-size:45px!important;background:linear-gradient(#e9f5d5,#e4c79f)!important}
+#picnicLoadError{background:#fff2d4;color:#6d432a;padding:15px;border-radius:15px;font-size:15px}
+@media(max-width:850px){.picnic-main{grid-template-columns:minmax(0,1fr) 250px}.picnic-sidebar{padding:18px 15px}.picnic-order{display:none}.picnic-view{min-height:400px}}
+@media(max-width:600px){#picnicScr{height:100dvh;overflow-y:auto}.picnic-main{display:flex;flex-direction:column;flex:none;min-height:0}.picnic-view{height:430px;min-height:350px;flex:none}.picnic-sidebar{border-left:0;border-top:1px solid #e5dbc8;overflow:visible;display:grid;grid-template-columns:1fr;gap:12px;padding:18px 16px}.picnic-sidebar h2{font-size:23px}.picnic-guide{display:none}.picnic-steps{grid-template-columns:repeat(4,1fr)}.picnic-top{gap:10px}.picnic-brand strong{font-size:18px}.picnic-brand small{font-size:9px}.picnic-bubble{right:12px;top:12px;padding:8px 10px;font-size:12px;max-width:120px}.picnic-bubble strong{font-size:21px}.picnic-scene-tag{left:10px;top:13px;font-size:9px;padding:6px 9px}.picnic-action{font-size:15px;padding:11px 12px}.picnic-controls{padding:14px 10px 9px}.picnic-options{margin:0}.picnic-speech{padding:12px}.picnic-sidebar #picnicNext{order:0}}
+@media(max-width:360px){.picnic-view{height:385px}.picnic-brand strong{font-size:16px}.picnic-actions{gap:8px}.picnic-action{padding:10px;font-size:14px}}
+@media(orientation:landscape) and (max-height:520px){#picnicScr{overflow-y:auto}.picnic-main{grid-template-columns:minmax(0,1fr) 245px;flex:none}.picnic-view{height:370px;min-height:370px}.picnic-sidebar{overflow:visible}.picnic-top{padding:7px 14px}}
+@media(prefers-reduced-motion:reduce){#picnicScr *,#picnicScr *::before,#picnicScr *::after{animation:none!important;transition:none!important}}
+.picnic-controls .picnic-next{display:block;max-width:350px;margin:12px auto 4px}
+@media(max-width:600px){.picnic-view{height:390px;min-height:350px}}
+@media(max-width:360px){.picnic-view{height:365px}}
+#picnicCanvas canvas{cursor:grab}#picnicCanvas canvas:active{cursor:grabbing}

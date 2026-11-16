@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/discovery.css">
 <link rel="stylesheet" href="css/parent-review.css">
 <link rel="stylesheet" href="css/forest.css">
+<link rel="stylesheet" href="css/picnic.css">
 </head>
 <body>
 
@@ -27,7 +28,9 @@
       <img class="home-bear" id="matveyBearHome" alt="Мишка Матвей — главный герой игры" draggable="false">
       <span class="home-spark s1">⭐</span><span class="home-spark s2">✨</span><span class="v8-hero-motto">СЛУШАЙ · ПОВТОРЯЙ · ИГРАЙ</span><span class="v8-butterfly" aria-hidden="true">🦋</span>
     </div>
+    <p id="picnicLoadError" role="status" hidden>Не удалось загрузить игру. Проверьте загрузку обновления и попробуйте снова.</p>
     <div class="home-actions home-actions-v6">
+      <button class="btn picnic-home-btn" id="picnicBtn"><span class="home-emoji">🥣</span><span class="home-action-copy"><strong>Лесное кафе · 3D</strong><small>Беру · мою · мешаю · угощаю</small></span></button>
       <button class="btn live-primary" id="liveBtn"><span class="home-emoji"><img data-v8-art="animal-cow" alt="" draggable="false"></span><span class="home-action-copy"><strong>Живые карточки</strong><small>Слушаем · повторяем · называем</small></span><b class="home-chev">›</b></button>
       <button class="btn story-primary" id="adventureBtn"><span class="home-emoji"><img data-v8-art="plant-tree" alt="" draggable="false"></span><span class="home-action-copy"><strong>Приключения речи</strong><small>Ищем животных и растения</small></span><b class="home-chev">›</b></button>
       <button class="btn m-home-btn" id="montessoriBtn"><span class="home-emoji"><img data-v8-art="animal-rabbit" alt="" draggable="false"></span><span class="home-action-copy"><strong>Монтессори-игры</strong><small>Сортируем · подбираем · кормим</small></span><b class="home-chev">›</b></button>
@@ -47,6 +50,37 @@
   <div class="parent-hint">⚙️ для родителей (голос, этапы, советы, блокировка): удерживайте 1 секунду</div>
 </section>
 
+
+<!-- v12: local WebGL playroom, loaded only on entry. -->
+<section id="picnicScr" class="screen" hidden aria-label="Лесное кафе: объёмная игра">
+ <header class="picnic-top">
+  <button id="picnicHome" class="icon-btn" aria-label="Выйти из 3D-игры на главную">⌂</button>
+  <div class="picnic-brand"><small>МАСТЕРСКАЯ МИШКИ МАТВЕЯ</small><strong>Лесное кафе</strong></div>
+  <span id="picnicOrder" class="picnic-order"></span>
+  <button id="picnicReplay" class="icon-btn" aria-label="Повторить слова и задание">🔊</button>
+ </header>
+ <div class="picnic-main">
+  <div class="picnic-play">
+   <div class="picnic-view">
+    <div id="picnicCanvas"></div>
+    <div class="picnic-scene-tag">МАЛЕНЬКИЕ ДЕЛА · БОЛЬШАЯ РАДОСТЬ</div>
+    <div class="picnic-bubble">Скажем вместе?<strong id="picnicWord">ДАЙ</strong></div>
+    <div id="picnicError" class="picnic-error" hidden><p id="picnicErrorText"></p><button id="picnicRetry" class="picnic-action">Попробовать снова</button></div>
+   </div>
+   <div class="picnic-controls"><div id="picnicActions" class="picnic-actions" aria-label="Действия в игре"></div><p id="picnicStatus" role="status" aria-live="polite"></p><button id="picnicNext" class="picnic-next" hidden disabled>Дальше ➜</button></div>
+  </div>
+  <aside class="picnic-sidebar">
+   <div class="picnic-guide"><img src="assets/bear-hero.webp" alt="Мишка Матвей"><p>Поиграем, поможем другу и попробуем сказать!</p></div>
+   <div id="picnicSteps" class="picnic-steps" aria-label="Шаги приготовления"></div>
+   <h2 id="picnicTitle">Попросим угощение</h2>
+   <p id="picnicInstruction"></p>
+   <div id="picnicSpeech" class="picnic-speech" hidden><strong id="picnicSpeechWord"></strong>Теперь пауза. Можно попробовать звук, слово или жест.<br><button id="picnicTry">Мы попробовали!</button></div>
+
+   <details><summary>Поиграем по-настоящему</summary><p id="picnicRealText"></p></details>
+   <div class="picnic-options"><label>Речь <select id="picnicLevel" aria-label="Уровень речевой подсказки"><option value="0">Звуки</option><option value="1" selected>Слова</option><option value="2">Короткие фразы</option></select></label><label><input type="checkbox" id="picnicHaptic">Лёгкая вибрация, если доступна</label></div>
+  </aside>
+ </div>
+</section>
 
 <!-- МИР ОТКРЫТИЙ: самостоятельные сенсорные задания -->
 <section id="montessoriScr" class="screen" hidden aria-label="Мир открытий с мишкой Матвеем">
@@ -403,6 +437,7 @@
 <script src="js/pwa.js"></script>
 <script src="js/visuals.js"></script>
 <script src="js/family-rewards.js"></script>
+<script src="js/picnic-launcher.js"></script>
 
 </body>
 </html>
